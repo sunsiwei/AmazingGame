@@ -1,0 +1,111 @@
+﻿{
+    "list": [
+        {
+            "index": 0,
+            "sceneName": "Level1",
+            "mazeWidth": 232,
+            "mazeHeight": 256,
+            "pacmanName": "pacman",
+            "pacmanPos": [
+                11,
+                11
+            ],
+			"pacmanDir": [
+                1,
+                0
+            ],
+            "pacmanSpeed": 0.12,
+            "pacmanExsitedSpeed": 0.13,
+			"exsitedDuration":5,
+			"superPacdot":[
+				{
+					"name":"superPacdot",
+					"position":[2,8]
+				}
+			],
+			"fruits":[
+				{
+					"name":"apple",
+					"position":[22,26],
+					"score":50,
+					"delayShowTime":5
+				},
+				{
+					"name":"banana",
+					"position":[7,26],
+					"score":50,
+					"delayShowTime":10
+				}
+			],
+            "ghosts": [
+                {
+                    "name": "Blue",
+					"type":0,
+                    "position": [
+                        13,
+                        17
+                    ],
+                    "speed": 0.1,
+                    "afraidSpeed": 0.12,
+					"score":50,
+                    "chasePosition": [
+                        27,
+                        30
+                    ]
+                },
+				{
+                    "name": "Pink",
+					"type":1,
+                    "position": [
+                        14,
+                        17
+                    ],
+                    "speed": 0.1,
+                    "afraidSpeed": 0.12,
+					"score":50,
+                    "chasePosition": [
+                        27,
+                        2
+                    ]
+                },
+				{
+                    "name": "Orange",
+					"type":2,
+                    "position": [
+                        15,
+                        17
+                    ],
+                    "speed": 0.1,
+                    "afraidSpeed": 0.12,
+					"score":50,
+                    "chasePosition": [
+                        2,
+                        30
+                    ]
+                }
+            ],
+            "enemyBehaviors": [
+                {
+                    "type": 0,
+                    "duration": 7
+                },
+                {
+                    "type": 1,
+                    "duration": 7
+                },
+                {
+                    "type": 0,
+                    "duration": 5
+                },
+                {
+                    "type": 1,
+                    "duration": 5
+                },
+                {
+                    "type": 0,
+                    "duration": 500
+                }
+            ]
+        }
+    ]
+}
