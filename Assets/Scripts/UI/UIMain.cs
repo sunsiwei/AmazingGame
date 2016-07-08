@@ -5,19 +5,22 @@ using UnityEngine.UI;
 namespace PacmanGame
 {
 	public class UIMain : UIBase {
-
-		public Text txtScore;
-        public Text txtLives;
+        [SerializeField]
+		private Text txtScore;
+        [SerializeField]
+        private Text txtLives;
 
 		void Awake()
 		{
-            ScoreModule sm = ModuleManager.Instance.GetModule(ScoreModule.name) as ScoreModule;
-            sm.EventScoreUpdate += new ScoreModule.ScoreUpdateHandler(EventScoreUpdate);
+            PlayerScoreModule sm = ModuleManager.Instance.GetModule(PlayerScoreModule.name) as PlayerScoreModule;
+            sm.EventScoreUpdate += EventScoreUpdate;
+
+            PlayerModule pm = ModuleManager.Instance.GetModule(PlayerModule.name) as PlayerModule;
+            pm.EnentPlayerLivesUpdate += EventLivesUpdate;
 		}
 
         void Start()
         {
-
         }
 		
 		public void ShowMenu()
@@ -31,7 +34,7 @@ namespace PacmanGame
 		}
         void EventLivesUpdate(int lives)
         {
-            txtLives.text = "lives: " + lives;
+            //txtLives.text = "lives: " + lives;
         }
         
 	}

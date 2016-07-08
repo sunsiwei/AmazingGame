@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace PacmanGame
 {
-    public class ModuleBase : IModule
+    public class ModuleBase
     {
         string name;
         public string Name
@@ -21,7 +21,7 @@ namespace PacmanGame
         { }
 
 		// excute it when every game level loaded
-        public virtual void OnLevelLoaded()
+        public virtual void OnLevelLoaded(int index)
         { }
     }
 }

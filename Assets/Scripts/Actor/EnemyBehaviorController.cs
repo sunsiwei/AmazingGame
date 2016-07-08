@@ -37,8 +37,8 @@ namespace PacmanGame
             behaviors.Add(b);
         }
 
-        public delegate void EnterBehavior(BehaviorType behaviorType);
-        public EnterBehavior onEnterBehavior;
+        public delegate void EnterBehaviorHandler(BehaviorType behaviorType);
+        public EnterBehaviorHandler onEnterBehavior;
         public void StartBehavior()
         {
             StartCoroutine(CStartBehavior());

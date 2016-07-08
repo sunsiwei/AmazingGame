@@ -22,4 +22,9 @@ public class testtouch : MonoBehaviour {
     //        p.Prompt("12312eeeeeeeeeeeeeeeeeeee3123");
     //    }
     //}
+
+    void Start()
+    {
+        GetComponent<BaseMove>().ImmediateMoveTo(Vector2.zero);
+    }
 }

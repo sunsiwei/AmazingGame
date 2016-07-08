@@ -1,0 +1,232 @@
+﻿{
+    "levels": [
+        {
+            "index": 0,
+            "sceneName": "Level1",
+            "mazeWidth": 232,
+            "mazeHeight": 256,
+			"FoodAmount":1,
+			"player":{
+				"name":"pacman",
+				"position": [
+					11,
+					11
+				],
+				"direction": [
+					1,
+					0
+				],	
+				"speed": 0.12,
+				"exsitedSpeed": 0.13,
+				"exsitedDuration":5,
+				"reliveDuration":5
+			},
+			"superPacdot":[
+				{
+					"name":"superPacdot",
+					"position":[2,8]
+				}
+			],
+			"fruits":[
+				{
+					"name":"apple",
+					"position":[22,26],
+					"score":50,
+					"delayShowTime":5
+				},
+				{
+					"name":"banana",
+					"position":[7,26],
+					"score":50,
+					"delayShowTime":10
+				}
+			],
+            "enemys": [
+                {
+                    "name": "Blue",
+					"searchType":0,
+                    "position": [
+                        13,
+                        17
+                    ],
+                    "speed": 0.1,
+                    "afraidSpeed": 0.12,
+					"reliveDuration": 2,
+					"score":50,
+                    "scatterPosition": [
+                        27,
+                        30
+                    ]
+                },
+				{
+                    "name": "Pink",
+					"searchType":1,
+                    "position": [
+                        14,
+                        17
+                    ],
+                    "speed": 0.1,
+                    "afraidSpeed": 0.12,
+					"reliveDuration": 2,
+					"score":50,
+                    "scatterPosition": [
+                        27,
+                        2
+                    ]
+                },
+				{
+                    "name": "Orange",
+					"searchType":2,
+                    "position": [
+                        15,
+                        17
+                    ],
+                    "speed": 0.1,
+                    "afraidSpeed": 0.12,
+					"reliveDuration": 2,
+					"score":50,
+                    "scatterPosition": [
+                        2,
+                        30
+                    ]
+                }
+            ],
+            "enemyBehaviors": [
+                {
+                    "type": 0,
+                    "duration": 7
+                },
+                {
+                    "type": 1,
+                    "duration": 7
+                },
+                {
+                    "type": 0,
+                    "duration": 5
+                },
+                {
+                    "type": 1,
+                    "duration": 5
+                },
+                {
+                    "type": 0,
+                    "duration": 500
+                }
+            ]
+        },
+		{
+            "index": 0,
+            "sceneName": "Level1",
+            "mazeWidth": 232,
+            "mazeHeight": 256,
+			"FoodAmount":1,
+			"player":{
+				"name":"pacman",
+				"position": [
+					11,
+					11
+				],
+				"direction": [
+					1,
+					0
+				],	
+				"speed": 0.12,
+				"exsitedSpeed": 0.13,
+				"exsitedDuration":5,
+				"reliveDuration":5
+			},
+			"superPacdot":[
+				{
+					"name":"superPacdot",
+					"position":[2,8]
+				}
+			],
+			"fruits":[
+				{
+					"name":"apple",
+					"position":[22,26],
+					"score":50,
+					"delayShowTime":5
+				},
+				{
+					"name":"banana",
+					"position":[7,26],
+					"score":50,
+					"delayShowTime":10
+				}
+			],
+            "enemys": [
+                {
+                    "name": "Blue",
+					"searchType":0,
+                    "position": [
+                        13,
+                        17
+                    ],
+                    "speed": 0.1,
+                    "afraidSpeed": 0.12,
+					"reliveDuration": 2,
+					"score":50,
+                    "scatterPosition": [
+                        27,
+                        30
+                    ]
+                },
+				{
+                    "name": "Pink",
+					"searchType":1,
+                    "position": [
+                        14,
+                        17
+                    ],
+                    "speed": 0.1,
+                    "afraidSpeed": 0.12,
+					"reliveDuration": 2,
+					"score":50,
+                    "scatterPosition": [
+                        27,
+                        2
+                    ]
+                },
+				{
+                    "name": "Orange",
+					"searchType":2,
+                    "position": [
+                        15,
+                        17
+                    ],
+                    "speed": 0.1,
+                    "afraidSpeed": 0.12,
+					"reliveDuration": 2,
+					"score":50,
+                    "scatterPosition": [
+                        2,
+                        30
+                    ]
+                }
+            ],
+            "enemyBehaviors": [
+                {
+                    "type": 0,
+                    "duration": 7
+                },
+                {
+                    "type": 1,
+                    "duration": 7
+                },
+                {
+                    "type": 0,
+                    "duration": 5
+                },
+                {
+                    "type": 1,
+                    "duration": 5
+                },
+                {
+                    "type": 0,
+                    "duration": 500
+                }
+            ]
+        }
+    ]
+}

@@ -23,8 +23,8 @@ namespace PacmanGame
         void OnTriggerEnter2D(Collider2D co)
         {
             Transform target = co.transform;
-            if (target.GetComponent<PacmanMove>())
-                target.GetComponent<PacmanMove>().SetPosition(toTransmitPoint.position);
+            if (target.GetComponent<BaseMove>())
+                target.GetComponent<BaseMove>().ImmediateMoveTo(toTransmitPoint.position);
             else
                 target.position = toTransmitPoint.position;
         }

@@ -17,7 +17,8 @@ namespace PacmanGame
         public GameLevel(int _index)
         {
             index = _index;
-            levelCfg = ConfigManager.GetLevelCfg(index);
+            JsonData levelsCfg = ConfigManager.Instance.GetCfg("gameLevelCfg");
+            levelCfg = levelsCfg["levels"][index];
         }
 
         public void OnLevelLoaded()
@@ -26,7 +27,7 @@ namespace PacmanGame
             ResourcesLoader.LoadOther("EasyTouchControlsCanvas");
 
 
-            ModuleManager.Instance.OnLevelLoaded();
+            ModuleManager.Instance.OnLevelLoaded(index);
         }
 
         public string GetLevelName()

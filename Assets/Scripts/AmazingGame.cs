@@ -1,10 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
+using LitJson;
 
 namespace PacmanGame
 {
     public class AmazingGame : MonoBehaviour
     {
+        public static int MapLayer = 8;
+        public static int FoodLayer = 9;
+        public static int EnemyLayer = 10;
+        public static int PlayerLayer = 11;
+
         AndroidJavaClass mJc;
         AndroidJavaObject mJo;
 
@@ -24,6 +30,8 @@ namespace PacmanGame
             ConfigManager.LoadCfg();
 
             UIManager.GetInstance().ShowUI("UIStartMenu");
+
+
 
 
             // 广告相关
@@ -70,8 +78,9 @@ namespace PacmanGame
         public void ToNextLevel()
         {
             int currentLevelIndex = level.Index;
-            int totalLevelCount = ConfigManager.GetLevelsCfg().Count;
-            if (level.Index + 1 >= totalLevelCount)
+            JsonData levelCfg = ConfigManager.Instance.GetCfg("gameLevelCfg");
+            int levelAmount = levelCfg["levels"].Count;
+            if (level.Index + 1 >= levelAmount)
             {
                 Debug.Log("The End!!!");
                 Restart();
@@ -82,6 +91,12 @@ namespace PacmanGame
 
             level = new GameLevel(currentLevelIndex + 1);
             LoadLevelAsync(level.GetLevelName());
+        }
+
+        public void GameOver()
+        {
+            Debug.Log("Game over!!!");
+            UIManager.GetInstance().ShowUI("UIGameOver");
         }
 
         void LoadLevel(string name)

@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
+using PacmanGame;
 
-public class TestPathFinding : MonoBehaviour {
+public class TestPathFinding : BaseMove
+{
 
 	// Use this for initialization
 	void Start () {

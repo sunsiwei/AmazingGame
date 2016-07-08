@@ -3,11 +3,11 @@ using System.Collections;
 
 namespace PacmanGame
 {
-    public class ScoreModule : ModuleBase
+    public class PlayerScoreModule : ModuleBase
     {
-        public static string name = "ScoreModule";
+        public static string name = "PlayerScoreModule";
 
-        public ScoreModule(string _name)
+        public PlayerScoreModule(string _name)
             :base(_name)
         {
 
@@ -34,10 +34,10 @@ namespace PacmanGame
             score = 0;
         }
 
-        public override void OnLevelLoaded()
+        public override void OnLevelLoaded(int levelIndex)
         {
-			base.Init ();
-
+            base.OnLevelLoaded(levelIndex);
+            EventScoreUpdate(score);
         }
     }
 }

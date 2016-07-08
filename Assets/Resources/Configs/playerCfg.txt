@@ -1,3 +1,4 @@
 ﻿{
-   "playerCounts":3
+   "playerCounts":3,
+   "playerReliveDelayTime":4
 }

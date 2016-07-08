@@ -15,7 +15,7 @@ namespace PacmanGame
         Lazy = 3,
     }
 
-    public class EnemyAISearch : MonoBehaviour
+    public class EnemyAISearch : BaseMove
     {
         public class PositionSortInfo : IComparable
         {
@@ -28,6 +28,10 @@ namespace PacmanGame
             }
         }
 
+        void Awake()
+        {
+            NotificationCenter.DefaultCenter().AddObserver(this, "EventPlayerHitAfraidFood");
+        }
 
         double currentSpeed;
         double initialSpeed;
@@ -38,6 +42,16 @@ namespace PacmanGame
                 currentSpeed = initialSpeed;
             }
         }
+        double afraidSpeed;
+        public double AfraidSpeed
+        {
+            set { afraidSpeed = value; }
+        }
+        int reliveDuration;
+        public int ReliveDuration
+        {
+            set { reliveDuration = value; }
+        }
         Vector2 initialPosition;
         public Vector2 InitialPosition
         { 
@@ -45,6 +59,7 @@ namespace PacmanGame
             { 
                 initialPosition = value;
                 transform.position = initialPosition;
+                nextPos = initialPosition;
             } 
         }
         Vector2 scatterPosition;
@@ -67,7 +82,6 @@ namespace PacmanGame
         }
         Vector2[] directionList = { Vector2.up, Vector2.right, Vector2.down, Vector2.left };
         Vector2 lastPos;
-        Vector2 nextPos;
         bool pauseSearch;
         public bool PauseSearch
         {
@@ -88,23 +102,25 @@ namespace PacmanGame
                 JsonData behaviorCfg = behaviorsCfg[index];
                 behaviorController.AddBehavior((BehaviorType)(int)behaviorCfg["type"], (int)behaviorCfg["duration"]);
             }
-            behaviorController.StartBehavior();
             behaviorController.onEnterBehavior = OnEnterBehavior;
+            behaviorController.StartBehavior();
         }
         void OnEnterBehavior(BehaviorType _behaviorType)
         {
             behaviorType = _behaviorType;
         }
 
-        public void MakeAfraid(float _afraidSpeed, float _afraidDuration)
+        public void MakeAfraid()
         {
-            StartCoroutine(CMakeAfraid(_afraidSpeed, _afraidDuration));
+            PlayerModule pm = ModuleManager.Instance.GetModule(PlayerModule.name) as PlayerModule;
+            float _afraidDuration = pm.GetExsitedDuration();
+            StartCoroutine(CMakeAfraid(_afraidDuration));
         }
-        IEnumerator CMakeAfraid(float _afraidSpeed, float _afraidDuration)
+        IEnumerator CMakeAfraid(float _afraidDuration)
         {
             behaviorController.Pause = true;
 
-            currentSpeed = _afraidSpeed;
+            currentSpeed = afraidSpeed;
             behaviorType = PacmanGame.BehaviorType.Afraid;
 
             yield return new WaitForSeconds(_afraidDuration);
@@ -114,28 +130,20 @@ namespace PacmanGame
             currentSpeed = initialSpeed;
         }
 
-        public void MakeHome(float _homeDuration)
+        public void MakeHome()
         {
-            StartCoroutine(CMakeHome(_homeDuration));
-        }
-        IEnumerator CMakeHome(float _homeDuration)
-        {
-            transform.position = initialPosition;
-            nextPos = initialPosition;
+            ImmediateMoveTo(initialPosition);
 
             behaviorController.Pause = true;
 
             behaviorType = PacmanGame.BehaviorType.Home;
-            yield return new WaitForSeconds(_homeDuration);
-
-            behaviorController.Pause = false;
         }
 
-        public void MakeHomeForDead(float _homeDuration)
+        public void MakeHomeForDead()
         {
-            StartCoroutine(CMakeHomeForDead(_homeDuration));
+            StartCoroutine(CMakeHomeForDead());
         }
-        IEnumerator CMakeHomeForDead(float _homeDuration)
+        IEnumerator CMakeHomeForDead()
         {
             StopAllCoroutines();
             behaviorController.Pause = true;
@@ -144,8 +152,14 @@ namespace PacmanGame
             nextPos = initialPosition;
             behaviorType = PacmanGame.BehaviorType.Home;
 
-            yield return new WaitForSeconds(_homeDuration);
+            yield return new WaitForSeconds(reliveDuration);
 
+            behaviorController.Pause = false;
+        }
+
+        public void ContinueSearch()
+        {
+            currentSpeed = initialSpeed;
             behaviorController.Pause = false;
         }
 
@@ -218,15 +232,16 @@ namespace PacmanGame
                 }
                 else if (searchType == SearchType.Front)
                 {
-                    PacmanMove pm = ChaseTarget.GetComponent<PacmanMove>();
-                    Vector2 dir = pm.GetDirection();
+                    Transform obj = ChaseTarget;
+                    PlayerMove pm = obj.GetComponent<PlayerMove>();
+                    Vector2 dir = pm.CurDirection;
                     Vector2 targetPos = (Vector2)ChaseTarget.position + dir * 4;
                     return targetPos;
                 }
                 else if (searchType == SearchType.Smart)
                 {
-                    PacmanMove pm = ChaseTarget.GetComponent<PacmanMove>();
-                    Vector2 dir = pm.GetDirection();
+                    PlayerMove pm = ChaseTarget.GetComponent<PlayerMove>();
+                    Vector2 dir = pm.CurDirection;
                     Vector2 tempPos = (Vector2)ChaseTarget.position + dir * 2;
                     EnemyModule em = ModuleManager.Instance.GetModule(EnemyModule.name) as EnemyModule;
                     GameObject blue = em.GetEnemy(SearchType.Direct);
@@ -245,7 +260,10 @@ namespace PacmanGame
             get 
             {
                 PlayerModule pm = ModuleManager.Instance.GetModule(PlayerModule.name) as PlayerModule;
-                return pm.GetPlayer().transform;
+                GameObject player = pm.GetPlayer();
+                if (player == null)
+                    return null;
+                return player.transform;
             }
         }
         
@@ -298,10 +316,15 @@ namespace PacmanGame
         bool CheckMove(Vector2 nextPos)
         {
             Vector2 pos = transform.position;
-            int layerMask = 1 << 9 | 1 << 11;
+            int layerMask = 1 << AmazingGame.MapLayer | 1 << AmazingGame.EnemyLayer;
             Vector2 dir = (nextPos - pos).normalized;
             RaycastHit2D circleHit = Physics2D.CircleCast(nextPos + dir * 0.2f, 0.2f, -dir, 1.2f, layerMask);
             return circleHit.collider == GetComponent<Collider2D>();
+        }
+
+        void EventPlayerHitAfraidFood(Notification noti)
+        {
+            MakeAfraid();
         }
     }
 }

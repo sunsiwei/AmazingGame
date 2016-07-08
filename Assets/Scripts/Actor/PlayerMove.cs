@@ -3,18 +3,18 @@ using System.Collections;
 
 namespace PacmanGame
 {
-    public class PlayerMove : MonoBehaviour
+    public class PlayerMove : BaseMove
     {
 
         double speed = 0.1;
-        Vector2 destination;
+        
         Vector2 expectDirection = Vector2.right;
         Vector2 curDirection = Vector2.right;
         bool pause;
 
         void Start()
         {
-            destination = transform.position;
+            nextPos = transform.position;
         }
 
         public bool Pause
@@ -36,57 +36,55 @@ namespace PacmanGame
             get { return curDirection; }
         }
 
-        public void ImmediateMoveTo(Vector2 to)
-        {
-            transform.position = to;
-            destination = to;
-        }
+
 
         void FixedUpdate()
         {
             if (pause)
                 return;
 
-            if ((Vector2)transform.position == destination)
+            if ((Vector2)transform.position == nextPos)
             {
                 if (valid(expectDirection))
                 {
-                    destination = (Vector2)transform.position + expectDirection;
+                    nextPos = (Vector2)transform.position + expectDirection;
                     curDirection = expectDirection;
                 }
                 else
                 {
                     if (valid(curDirection))
                     {
-                        destination = (Vector2)transform.position + curDirection;
+                        nextPos = (Vector2)transform.position + curDirection;
                     }
                     else
                     {
                         curDirection = -curDirection;
                         expectDirection = curDirection;
-                        destination = (Vector2)transform.position + curDirection;
+                        nextPos = (Vector2)transform.position + curDirection;
                     }
                 }
             }
             //Debug.LogFormat("position: {0}, destation: {1}. direction:{2}, expectDir:{3}", (Vector2)transform.position, dest, curDir, expectDir);
             // Move closer to Destination
-            Vector2 p = Vector2.MoveTowards(transform.position, destination, (float)speed);
+            Vector2 p = Vector2.MoveTowards(transform.position, nextPos, (float)speed);
             GetComponent<Rigidbody2D>().MovePosition(p);
 
             // Animation Parameters
-            Vector2 dir = destination - (Vector2)transform.position;
+            Vector2 dir = nextPos - (Vector2)transform.position;
             GetComponent<Animator>().SetFloat("DirX", dir.x);
             GetComponent<Animator>().SetFloat("DirY", dir.y);
         }
         bool valid(Vector2 dir)
         {
             Vector2 pos = transform.position;
-            int layerMask = 1 << 9 | 1 << 12;
+            int layerMask = 1 << AmazingGame.MapLayer | 1 << AmazingGame.PlayerLayer;
             //RaycastHit2D hit = Physics2D.Linecast(pos + dir*1.2f, pos, layerMask);
             RaycastHit2D circleHit = Physics2D.CircleCast(pos + dir * 1.2f, 0.2f, -dir, 1f, layerMask);
             bool b = circleHit.collider == GetComponent<Collider2D>();
             return b;
         }
+
+        
     }
 }
 

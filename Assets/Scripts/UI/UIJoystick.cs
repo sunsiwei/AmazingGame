@@ -5,7 +5,7 @@ public class UIJoystick : MonoBehaviour {
 
     public void OnMoveStart()
     {
-        NotificationCenter.DefaultCenter().PostNotification(this, "EventJoystickStart");
+        //NotificationCenter.DefaultCenter().PostNotification(this, "EventJoystickStart");
     }
     public void OnMove(Vector2 v)
     {
@@ -13,6 +13,6 @@ public class UIJoystick : MonoBehaviour {
     }
     public void OnMoveEnd()
     {
-        NotificationCenter.DefaultCenter().PostNotification(this, "EventJoystickEnd");
+        //NotificationCenter.DefaultCenter().PostNotification(this, "EventJoystickEnd");
     }
 }

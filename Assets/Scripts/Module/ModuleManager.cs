@@ -13,8 +13,11 @@ namespace PacmanGame
         public void RegisterModules()
         {
             // here init each module.
+            RegisterModule(new PlayerModule(PlayerModule.name));
             RegisterModule(new PromptModule(PromptModule.name));
-            //RegisterModule(new DotModule(DotModule.name));
+            RegisterModule(new PlayerScoreModule(PlayerScoreModule.name));
+            RegisterModule(new EnemyModule(EnemyModule.name));
+            RegisterModule(new FoodModule(FoodModule.name));
         }
 
 		//excute it when every restart game
@@ -27,18 +30,21 @@ namespace PacmanGame
         }
 
 		// excute it when every game level loaded
-        public void OnLevelLoaded()
+        public void OnLevelLoaded(int index)
         {
             foreach (ModuleBase mb in modules.Values)
             {
-                mb.OnLevelLoaded();
+                mb.OnLevelLoaded(index);
             }
         }
 
         public ModuleBase GetModule(string moduleName)
         {
             if (modules.ContainsKey(moduleName) == false)
+            {
+                Debug.LogErrorFormat("error: module: {0} has not register!!!", moduleName);
                 return null;
+            }
             return modules[moduleName];
         }
 
