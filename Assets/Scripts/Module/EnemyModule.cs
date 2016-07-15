@@ -36,7 +36,7 @@ namespace PacmanGame
             {
                 JsonData enemyCfg = enemysCfg[index];
                 GameObject enemyObj = ResourcesLoader.LoadActor((string)enemyCfg["name"]);
-                enemyObj.name = (string)enemyCfg["name"] + index;
+                enemyObj.name = (string)enemyCfg["name"];
                 enemys.Add(enemyObj);
 
                 EnemyAISearch eas = enemyObj.GetComponent<EnemyAISearch>();
@@ -78,7 +78,16 @@ namespace PacmanGame
             foreach (GameObject obj in enemys)
             {
                 EnemyAISearch eas = obj.GetComponent<EnemyAISearch>();
-                eas.ContinueSearch();
+                eas.ContinueOriginalBehavior();
+            }
+        }
+
+        public void MakeAllPause(bool pause)
+        {
+            foreach (GameObject obj in enemys)
+            {
+                EnemyAISearch eas = obj.GetComponent<EnemyAISearch>();
+                eas.PauseSearch = pause;
             }
         }
     }

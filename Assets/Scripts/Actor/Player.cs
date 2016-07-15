@@ -28,24 +28,32 @@ namespace PacmanGame
                 }
             }else
             if (co.CompareTag("Food"))
-            { 
+            {
                 ActorScore aScore = co.GetComponent<ActorScore>();
                 if (aScore != null)
                 {
                     PlayerScoreModule psm = ModuleManager.Instance.GetModule(PlayerScoreModule.name) as PlayerScoreModule;
                     psm.Score += aScore.Score;
                 }
-                Food food = co.GetComponent<Food>();
-                if (food.foodType == Food.FoodType.Accelerate)
+
+                if (co.GetComponent<AccelerateFood>() != null)
                 {
-                    StartCoroutine(Accelerate(food.accelerateRate, food.accelerateDuration));
-                }else if(food.foodType == Food.FoodType.EnemyAfriad)
+                    AccelerateFood af = co.GetComponent<AccelerateFood>();
+                    StartCoroutine(Accelerate(af.accelerateRate, af.accelerateDuration));
+                }
+                else if (co.GetComponent<ExcitedFood>() != null)
                 {
-                    PlayerModule pm = ModuleManager.Instance.GetModule(PlayerModule.name) as PlayerModule;
-                    float excitedDuration = pm.GetExsitedDuration();
-                    StartCoroutine(Accelerate(food.accelerateRate, excitedDuration));
-                    NotificationCenter.DefaultCenter().PostNotification(this, "EventPlayerHitAfraidFood");
-                }else if(food.foodType == Food.FoodType.Normal)
+                    ExcitedFood ef = co.GetComponent<ExcitedFood>();
+                    StartCoroutine(Accelerate((float)ef.accelerateRate, (float)ef.excitedDuration));
+                    NotificationCenter.DefaultCenter().PostNotification(this, "EventPlayerExcited", (float)ef.excitedDuration);
+                }
+                else if (co.GetComponent<EnemyPauseFood>() != null)
+                {
+                    EnemyPauseFood epf = co.GetComponent<EnemyPauseFood>();
+                    StartCoroutine(MakeAllEnemyPause(epf.pauseDuration));
+                    Debug.Log("enemy all pause.");
+                }
+                else
                 {
                     FoodModule fm = ModuleManager.Instance.GetModule(FoodModule.name) as FoodModule;
                     fm.AlreadyEatFoodCount++;
@@ -61,6 +69,13 @@ namespace PacmanGame
             yield return new WaitForSeconds(accelerateDuration);
 
             pm.Speed = originalSpeed;
+        }
+        IEnumerator MakeAllEnemyPause(int dura)
+        {
+            EnemyModule em = ModuleManager.Instance.GetModule(EnemyModule.name) as EnemyModule;
+            em.MakeAllPause(true);
+            yield return new WaitForSeconds(dura);
+            em.MakeAllPause(false);
         }
 
 

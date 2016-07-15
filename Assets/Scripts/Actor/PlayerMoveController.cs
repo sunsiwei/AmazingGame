@@ -9,9 +9,12 @@ namespace PacmanGame
         void Start()
         {
             pm = GetComponent<PlayerMove>();
-            //NotificationCenter.DefaultCenter().AddObserver(this, "EventJoystickStart");
+
+            //joystick
             NotificationCenter.DefaultCenter().AddObserver(this, "EventJoystickMove");
-            //NotificationCenter.DefaultCenter().AddObserver(this, "EventJoystickEnd");
+
+            //swipe
+            EasyTouch.On_SwipeEnd += On_SwipeEnd;
         }
 
         void EventJoystickMove(Notification noti)
@@ -56,6 +59,25 @@ namespace PacmanGame
                 return Vector2.left;
             }
             return Vector2.zero;
+        }
+
+        void On_SwipeEnd(Gesture gesture)
+        {
+            switch (gesture.swipe)
+            { 
+                case EasyTouch.SwipeDirection.Up:
+                    pm.ExpectDirection = Vector2.up;
+                    break;
+                case EasyTouch.SwipeDirection.Right:
+                    pm.ExpectDirection = Vector2.right;
+                    break;
+                case EasyTouch.SwipeDirection.Down:
+                    pm.ExpectDirection = Vector2.down;
+                    break;
+                case EasyTouch.SwipeDirection.Left:
+                    pm.ExpectDirection = Vector2.left;
+                    break;
+            }
         }
     }
 }

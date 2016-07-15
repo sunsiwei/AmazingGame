@@ -1,4 +1,5 @@
 ﻿{
-   "playerCounts":3,
+	"playerControlType":0,	//0 swipe control, 1 joystick control
+   "playerCounts":1,
    "playerReliveDelayTime":4
 }

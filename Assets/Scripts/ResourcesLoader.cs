@@ -29,6 +29,10 @@ namespace PacmanGame
         {
             return Resources.Load("Audio/" + name) as AudioClip;
         }
+        public static GameObject LoadFood(string name)
+        {
+            return Object.Instantiate(Resources.Load("Foods/" + name), Vector3.zero, Quaternion.identity) as GameObject;
+        }
 	}
 }
 

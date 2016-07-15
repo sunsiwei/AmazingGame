@@ -23,9 +23,19 @@ namespace PacmanGame
 
         public void OnLevelLoaded()
         {
-            UIManager.GetInstance().ShowUI("UIMain");
-            ResourcesLoader.LoadOther("EasyTouchControlsCanvas");
+            PageManager.Instance.ShowPage("UIMain");
 
+            JsonData playerCfg = ConfigManager.Instance.GetCfg("playerCfg");
+            int playerCtlType = (int)playerCfg["playerControlType"];
+            if (playerCtlType == 0)
+            {
+                ResourcesLoader.LoadOther("SwipeControl");
+            }
+            else if (playerCtlType == 1)
+            {
+                ResourcesLoader.LoadOther("JoystickControl");
+            }
+            
 
             ModuleManager.Instance.OnLevelLoaded(index);
         }

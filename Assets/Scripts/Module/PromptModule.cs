@@ -15,8 +15,8 @@ namespace PacmanGame
 
         public void Prompt(string txt)
         {
-            UIPrompt up = UIManager.GetInstance().ShowUI("UIPrompt").GetComponent<UIPrompt>();
-            up.PromptText(txt);
+            PromptPage pp = PageManager.Instance.GetPage("UIPrompt") as PromptPage;
+            pp.PromptText(txt);
         }
     }
 }

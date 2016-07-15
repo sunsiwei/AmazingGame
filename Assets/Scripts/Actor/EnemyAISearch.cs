@@ -12,7 +12,7 @@ namespace PacmanGame
         Direct = 0,//pacman的当前位置为追击目标
         Front = 1,//pacman的当前位置的前进方向的4格位置为追击目标
         Smart = 2,//Blue到pacman的当前位置的前进方向的2格位置的方向再延伸一倍的位置
-        Lazy = 3,
+        Lazy = 3,//距离pacman超过8个单位时，以pacman为追击目标，少于8个单位时随机移动
     }
 
     public class EnemyAISearch : BaseMove
@@ -30,7 +30,7 @@ namespace PacmanGame
 
         void Awake()
         {
-            NotificationCenter.DefaultCenter().AddObserver(this, "EventPlayerHitAfraidFood");
+            NotificationCenter.DefaultCenter().AddObserver(this, "EventPlayerExcited");
         }
 
         double currentSpeed;
@@ -85,9 +85,18 @@ namespace PacmanGame
         bool pauseSearch;
         public bool PauseSearch
         {
-            set { pauseSearch = value; }
+            get { return pauseSearch; }
+            set { 
+                pauseSearch = value;
+                if (value == true)
+                {
+                    Rigidbody2D rb = GetComponent<Rigidbody2D>();
+                    rb.velocity = Vector2.zero;
+                }
+            }
         }
-        
+
+        int lazyEnemyCheckChaseDistance = 8;
 
         EnemyBehaviorController behaviorController;
 
@@ -110,11 +119,9 @@ namespace PacmanGame
             behaviorType = _behaviorType;
         }
 
-        public void MakeAfraid()
+        public void MakeAfraid(float dura)
         {
-            PlayerModule pm = ModuleManager.Instance.GetModule(PlayerModule.name) as PlayerModule;
-            float _afraidDuration = pm.GetExsitedDuration();
-            StartCoroutine(CMakeAfraid(_afraidDuration));
+            StartCoroutine(CMakeAfraid(dura));
         }
         IEnumerator CMakeAfraid(float _afraidDuration)
         {
@@ -157,7 +164,7 @@ namespace PacmanGame
             behaviorController.Pause = false;
         }
 
-        public void ContinueSearch()
+        public void ContinueOriginalBehavior()
         {
             currentSpeed = initialSpeed;
             behaviorController.Pause = false;
@@ -188,27 +195,20 @@ namespace PacmanGame
         Vector2 GetNextPos()
         {
 
-            if (behaviorType == BehaviorType.Scatter || behaviorType == BehaviorType.Chase)
+            if (behaviorType == BehaviorType.Chase)
             {
-                destination = GetDestinationPosition(behaviorType);
-                Vector2[] sortList = GetNearSortListToTarget(destination);
-
-                for (int index = 0; index < sortList.Length; index++)
-                {
-                    Vector2 pos = sortList[index];
-                    if (CheckMove(pos) && pos != lastPos)
-                        return pos;
-                }
+                destination = GetDestinationPositionForChase();
+                return GetNextPosForDestination(destination);
+            }
+            else if (behaviorType == BehaviorType.Scatter)
+            {
+                destination = scatterPosition;
+                return GetNextPosForDestination(destination);
             }
             else if (behaviorType == BehaviorType.Afraid)
             {
-                Vector2 pos = transform.position;
-                Vector2[] aroundPosList = new Vector2[4];
-                for (int i = 0; i < directionList.Length; i++)
-                {
-                    aroundPosList[i] = pos + directionList[i];
-                }
-                return GetAfraidRandomPos(aroundPosList);
+                Vector2 pos = GetRandomPositionAtAround();
+                return pos;
             }
             else if (behaviorType == BehaviorType.Home)
             {
@@ -222,38 +222,46 @@ namespace PacmanGame
             }
             return transform.position;
         }
-        Vector2 GetDestinationPosition(BehaviorType bType)
+        Vector2 GetDestinationPositionForChase()
         {
-            if (bType == BehaviorType.Chase)
+            if (searchType == SearchType.Direct)
             {
-                if (searchType == SearchType.Direct)
+                return ChaseTarget.position;
+            }
+            else if (searchType == SearchType.Front)
+            {
+                Transform obj = ChaseTarget;
+                PlayerMove pm = obj.GetComponent<PlayerMove>();
+                Vector2 dir = pm.CurDirection;
+                Vector2 targetPos = (Vector2)ChaseTarget.position + dir * 4;
+                return targetPos;
+            }
+            else if (searchType == SearchType.Smart)
+            {
+                PlayerMove pm = ChaseTarget.GetComponent<PlayerMove>();
+                Vector2 dir = pm.CurDirection;
+                Vector2 tempPos = (Vector2)ChaseTarget.position + dir * 2;
+                EnemyModule em = ModuleManager.Instance.GetModule(EnemyModule.name) as EnemyModule;
+                GameObject blue = em.GetEnemy(SearchType.Direct);
+                Vector2 bPos = blue.transform.position;
+                return (tempPos - bPos) * 2 + bPos;
+            }
+            else if (searchType == SearchType.Lazy)
+            {
+                float distance = Vector2.Distance(transform.position, ChaseTarget.position);
+                if (distance > lazyEnemyCheckChaseDistance)
                 {
                     return ChaseTarget.position;
                 }
-                else if (searchType == SearchType.Front)
+                else
                 {
-                    Transform obj = ChaseTarget;
-                    PlayerMove pm = obj.GetComponent<PlayerMove>();
-                    Vector2 dir = pm.CurDirection;
-                    Vector2 targetPos = (Vector2)ChaseTarget.position + dir * 4;
-                    return targetPos;
-                }
-                else if (searchType == SearchType.Smart)
-                {
-                    PlayerMove pm = ChaseTarget.GetComponent<PlayerMove>();
-                    Vector2 dir = pm.CurDirection;
-                    Vector2 tempPos = (Vector2)ChaseTarget.position + dir * 2;
-                    EnemyModule em = ModuleManager.Instance.GetModule(EnemyModule.name) as EnemyModule;
-                    GameObject blue = em.GetEnemy(SearchType.Direct);
-                    Vector2 bPos = blue.transform.position;
-                    return (tempPos - bPos) * 2 + bPos;
+                    return scatterPosition;
                 }
             }
-            else if (bType == BehaviorType.Scatter)
+            else
             {
-                return scatterPosition;
+                return transform.position;
             }
-            return transform.position;
         }
         Transform ChaseTarget
         {
@@ -266,7 +274,17 @@ namespace PacmanGame
                 return player.transform;
             }
         }
-        
+        Vector2 GetNextPosForDestination(Vector2 destination)
+        {
+            Vector2[] sortList = GetNearSortListToTarget(destination);
+            for (int index = 0; index < sortList.Length; index++)
+            {
+                Vector2 pos = sortList[index];
+                if (CheckMove(pos) && pos != lastPos)
+                    return pos;
+            }
+            return transform.position;
+        }
 
         Vector2[] GetNearSortListToTarget(Vector2 target)
         {
@@ -289,28 +307,37 @@ namespace PacmanGame
             }
             return sortList;
         }
-
-
-        Vector2 GetAfraidRandomPos(Vector2[] list)
+        Vector2 GetRandomPositionAtAround()
         {
-            int randomValue = UnityEngine.Random.Range(0, list.Length);
-            if (CheckMove(list[randomValue]) == false)
+            Vector2 pos = transform.position;
+            Vector2[] aroundPosList = new Vector2[4];
+            for (int i = 0; i < directionList.Length; i++)
+            {
+                aroundPosList[i] = pos + directionList[i];
+            }
+            return GetRandomMovePosition(aroundPosList);
+        }
+
+        Vector2 GetRandomMovePosition(Vector2[] listPos)
+        {
+            int randomValue = UnityEngine.Random.Range(0, listPos.Length);
+            if (CheckMove(listPos[randomValue]) == false)
             {
                 List<Vector2> tempList = new List<Vector2>();
-                for (int i = 0; i < list.Length; i++)
+                for (int i = 0; i < listPos.Length; i++)
                 {
                     if (i != randomValue)
                     {
-                        tempList.Add(list[i]);
+                        tempList.Add(listPos[i]);
                     }
                 }
                 if (tempList.Count <= 0)
                 {
                     return transform.position;
                 }
-                return GetAfraidRandomPos(tempList.ToArray());
+                return GetRandomMovePosition(tempList.ToArray());
             }
-            return list[randomValue];
+            return listPos[randomValue];
         }
 
         bool CheckMove(Vector2 nextPos)
@@ -322,9 +349,9 @@ namespace PacmanGame
             return circleHit.collider == GetComponent<Collider2D>();
         }
 
-        void EventPlayerHitAfraidFood(Notification noti)
+        void EventPlayerExcited(Notification noti)
         {
-            MakeAfraid();
+            MakeAfraid((float)noti.data);
         }
     }
 }

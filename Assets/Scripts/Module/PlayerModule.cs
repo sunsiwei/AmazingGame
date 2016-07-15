@@ -30,6 +30,17 @@ namespace PacmanGame
             }
         }
 
+        public delegate void PlayerExpectDirectionUpdateHandle(Vector2 dir);
+        public event PlayerExpectDirectionUpdateHandle EventPlayerExpectDirectionUpdate;
+        Vector2 playerExpectDirection;
+        public Vector2 PlayerExpectDirection
+        {
+            set {
+                playerExpectDirection = value;
+                EventPlayerExpectDirectionUpdate(value);
+            }
+        }
+
 		public override void Init ()
 		{
 			base.Init ();
@@ -75,10 +86,10 @@ namespace PacmanGame
         {
             return player;
         }
-        public int GetExsitedDuration()
-        {
-            return (int)levelPlayerCfg["exsitedDuration"];
-        }
+        //public int GetExsitedDuration()
+        //{
+        //    return (int)levelPlayerCfg["exsitedDuration"];
+        //}
 
         void AddPlayer()
         {

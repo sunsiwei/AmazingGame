@@ -29,7 +29,11 @@ namespace PacmanGame
         }
         public Vector2 ExpectDirection
         {
-            set { expectDirection = value; }
+            set { 
+                expectDirection = value;
+                PlayerModule pm = ModuleManager.Instance.GetModule(PlayerModule.name) as PlayerModule;
+                pm.PlayerExpectDirection = value;
+            }
         }
         public Vector2 CurDirection
         {

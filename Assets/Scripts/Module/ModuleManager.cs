@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -18,6 +19,7 @@ namespace PacmanGame
             RegisterModule(new PlayerScoreModule(PlayerScoreModule.name));
             RegisterModule(new EnemyModule(EnemyModule.name));
             RegisterModule(new FoodModule(FoodModule.name));
+
         }
 
 		//excute it when every restart game

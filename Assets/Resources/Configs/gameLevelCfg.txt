@@ -21,29 +21,9 @@
 				"exsitedDuration":5,
 				"reliveDuration":5
 			},
-			"superPacdot":[
-				{
-					"name":"superPacdot",
-					"position":[2,8]
-				}
-			],
-			"fruits":[
-				{
-					"name":"apple",
-					"position":[22,26],
-					"score":50,
-					"delayShowTime":5
-				},
-				{
-					"name":"banana",
-					"position":[7,26],
-					"score":50,
-					"delayShowTime":10
-				}
-			],
             "enemys": [
                 {
-                    "name": "Blue",
+                    "name": "Direct",
 					"searchType":0,
                     "position": [
                         13,
@@ -55,38 +35,6 @@
 					"score":50,
                     "scatterPosition": [
                         27,
-                        30
-                    ]
-                },
-				{
-                    "name": "Pink",
-					"searchType":1,
-                    "position": [
-                        14,
-                        17
-                    ],
-                    "speed": 0.1,
-                    "afraidSpeed": 0.12,
-					"reliveDuration": 2,
-					"score":50,
-                    "scatterPosition": [
-                        27,
-                        2
-                    ]
-                },
-				{
-                    "name": "Orange",
-					"searchType":2,
-                    "position": [
-                        15,
-                        17
-                    ],
-                    "speed": 0.1,
-                    "afraidSpeed": 0.12,
-					"reliveDuration": 2,
-					"score":50,
-                    "scatterPosition": [
-                        2,
                         30
                     ]
                 }
@@ -112,11 +60,22 @@
                     "type": 0,
                     "duration": 500
                 }
-            ]
+            ],
+			"specialFoods":[
+				"AccelerateFood",
+				"EnemyPauseFood",
+				"ExcitedFood"
+			],
+			"specialFoodPositions":[
+				[7,26],
+				[22,26],
+				[2,8],
+				[15,17]
+			]
         },
 		{
-            "index": 0,
-            "sceneName": "Level1",
+            "index": 1,
+            "sceneName": "Level2",
             "mazeWidth": 232,
             "mazeHeight": 256,
 			"FoodAmount":1,
@@ -135,29 +94,9 @@
 				"exsitedDuration":5,
 				"reliveDuration":5
 			},
-			"superPacdot":[
-				{
-					"name":"superPacdot",
-					"position":[2,8]
-				}
-			],
-			"fruits":[
-				{
-					"name":"apple",
-					"position":[22,26],
-					"score":50,
-					"delayShowTime":5
-				},
-				{
-					"name":"banana",
-					"position":[7,26],
-					"score":50,
-					"delayShowTime":10
-				}
-			],
             "enemys": [
                 {
-                    "name": "Blue",
+                    "name": "Direct",
 					"searchType":0,
                     "position": [
                         13,
@@ -173,7 +112,7 @@
                     ]
                 },
 				{
-                    "name": "Pink",
+                    "name": "Front",
 					"searchType":1,
                     "position": [
                         14,
@@ -189,7 +128,7 @@
                     ]
                 },
 				{
-                    "name": "Orange",
+                    "name": "Smart",
 					"searchType":2,
                     "position": [
                         15,
@@ -202,6 +141,22 @@
                     "scatterPosition": [
                         2,
                         30
+                    ]
+                },
+				{
+                    "name": "Lazy",
+					"searchType":3,
+                    "position": [
+                        16,
+                        17
+                    ],
+                    "speed": 0.1,
+                    "afraidSpeed": 0.12,
+					"reliveDuration": 2,
+					"score":50,
+                    "scatterPosition": [
+                        2,
+                        2
                     ]
                 }
             ],
@@ -226,7 +181,18 @@
                     "type": 0,
                     "duration": 500
                 }
-            ]
+            ],
+			"specialFoods":[
+				"AccelerateFood",
+				"EnemyPauseFood",
+				"ExcitedFood"
+			],
+			"specialFoodPositions":[
+				[7,26],
+				[22,26],
+				[2,8],
+				[15,17]
+			]
         }
     ]
 }

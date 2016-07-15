@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using LitJson;
+using System.IO;
+using System;
 
 namespace PacmanGame
 {
@@ -15,21 +17,35 @@ namespace PacmanGame
         AndroidJavaObject mJo;
 
         GameLevel level;
+        public GameLevel Level
+        { get { return level; } }
 
         public static AmazingGame Instance
         {
             get { return GameObject.Find("AmazingGame").GetComponent<AmazingGame>(); }
         }
 
+        string fileName = "amazinggame.txt";
+        string filePath;
         void Start()
         {
+            if (Application.platform == RuntimePlatform.Android)
+                filePath = Application.persistentDataPath;
+            else if (Application.platform == RuntimePlatform.WindowsEditor)
+                filePath = Application.dataPath;
+            else
+                filePath = Application.dataPath;
+
+
             GameObject.DontDestroyOnLoad(this);
 
             ModuleManager.Instance.RegisterModules();
+            PageManager.Instance.RegisterPages();
 
             ConfigManager.LoadCfg();
 
-            UIManager.GetInstance().ShowUI("UIStartMenu");
+
+            PageManager.Instance.ShowPage("UIStartMenu");
 
 
 
@@ -66,9 +82,11 @@ namespace PacmanGame
             }
         }
 
+
         public void Restart()
         {
-            UIManager.GetInstance().Clear();
+            StopAllCoroutines();
+
             ModuleManager.Instance.InitModules();
 
             level = new GameLevel(0);
@@ -77,6 +95,8 @@ namespace PacmanGame
 
         public void ToNextLevel()
         {
+            StopAllCoroutines();
+
             int currentLevelIndex = level.Index;
             JsonData levelCfg = ConfigManager.Instance.GetCfg("gameLevelCfg");
             int levelAmount = levelCfg["levels"].Count;
@@ -87,16 +107,19 @@ namespace PacmanGame
                 return;
             }
 
-            UIManager.GetInstance().Clear();
-
             level = new GameLevel(currentLevelIndex + 1);
             LoadLevelAsync(level.GetLevelName());
         }
 
         public void GameOver()
         {
+            StopAllCoroutines();
             Debug.Log("Game over!!!");
-            UIManager.GetInstance().ShowUI("UIGameOver");
+
+            EnemyModule em = ModuleManager.Instance.GetModule(EnemyModule.name) as EnemyModule;
+            em.MakeAllPause(true);
+
+            PageManager.Instance.ShowPage("UIGameOver");
         }
 
         void LoadLevel(string name)
@@ -111,6 +134,8 @@ namespace PacmanGame
             Application.LoadLevel("Loading");
         }
 
+        public delegate void LevelLoadedHandler(int index);
+        public event LevelLoadedHandler EventLevelLoaded;
         void OnLevelWasLoaded(int index)
         {
             Debug.LogFormat("level {0} was loaded.", Application.loadedLevelName);
@@ -118,7 +143,43 @@ namespace PacmanGame
             if (Application.loadedLevelName != "Loading")
             {
                 level.OnLevelLoaded();
+                EventLevelLoaded(level.Index);
             }
+        }
+
+        public int ReadLevelFromFile()
+        {
+            StreamReader sr = null;
+            try
+            {
+                sr = File.OpenText(filePath + "/" + fileName);
+            }
+            catch (Exception e)
+            {
+                return 0;
+            }
+            string str = sr.ReadToEnd();
+            JsonData jd = JsonMapper.ToObject(str);
+            int level = (int)jd["level"];
+            sr.Close();
+            sr.Dispose();
+            return level;
+        }
+        public void WriteLvelToFile(int levelIndex)
+        {
+            StreamWriter sw;
+            FileInfo f = new FileInfo(filePath + "/" + fileName);
+            if (f.Exists)
+            {
+                sw = f.CreateText();
+            }
+            else
+            {
+                sw = f.CreateText();
+            }
+            sw.WriteLine("{'level':" + levelIndex + "}");
+            sw.Close();
+            sw.Dispose();
         }
     }
 }
