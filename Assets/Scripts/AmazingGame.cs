@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using LitJson;
-using System.IO;
-using System;
+
 
 namespace PacmanGame
 {
@@ -25,18 +24,9 @@ namespace PacmanGame
             get { return GameObject.Find("AmazingGame").GetComponent<AmazingGame>(); }
         }
 
-        string fileName = "amazinggame.txt";
-        string filePath;
+        
         void Start()
         {
-            if (Application.platform == RuntimePlatform.Android)
-                filePath = Application.persistentDataPath;
-            else if (Application.platform == RuntimePlatform.WindowsEditor)
-                filePath = Application.dataPath;
-            else
-                filePath = Application.dataPath;
-
-
             GameObject.DontDestroyOnLoad(this);
 
             ModuleManager.Instance.RegisterModules();
@@ -82,12 +72,15 @@ namespace PacmanGame
             }
         }
 
+		public void EnterLevel(string levelName)
+		{
+			StopAllCoroutines();
+			LoadLevelAsync (levelName);
+		}
 
         public void Restart()
         {
             StopAllCoroutines();
-
-            ModuleManager.Instance.InitModules();
 
             level = new GameLevel(0);
             LoadLevelAsync(level.GetLevelName());
@@ -147,40 +140,7 @@ namespace PacmanGame
             }
         }
 
-        public int ReadLevelFromFile()
-        {
-            StreamReader sr = null;
-            try
-            {
-                sr = File.OpenText(filePath + "/" + fileName);
-            }
-            catch (Exception e)
-            {
-                return 0;
-            }
-            string str = sr.ReadToEnd();
-            JsonData jd = JsonMapper.ToObject(str);
-            int level = (int)jd["level"];
-            sr.Close();
-            sr.Dispose();
-            return level;
-        }
-        public void WriteLvelToFile(int levelIndex)
-        {
-            StreamWriter sw;
-            FileInfo f = new FileInfo(filePath + "/" + fileName);
-            if (f.Exists)
-            {
-                sw = f.CreateText();
-            }
-            else
-            {
-                sw = f.CreateText();
-            }
-            sw.WriteLine("{'level':" + levelIndex + "}");
-            sw.Close();
-            sw.Dispose();
-        }
+        
     }
 }
 

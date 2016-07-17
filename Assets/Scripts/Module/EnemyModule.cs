@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using LitJson;
@@ -17,11 +17,6 @@ namespace PacmanGame
 
         List<GameObject> enemys;
         JsonData enemysCfg;
-
-        public override void Init()
-        {
-            base.Init();
-        }
 
         public override void OnLevelLoaded(int levelIndex)
         {

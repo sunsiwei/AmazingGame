@@ -16,6 +16,7 @@ namespace PacmanGame
             RegisterPage(new GameOverPage(UIHierarchy.Panel, "UI/UIGameOver"));
             RegisterPage(new MenuPage(UIHierarchy.Panel, "UI/UIMenu"));
             RegisterPage(new PromptPage(UIHierarchy.Popup, "UI/UIPrompt"));
+			RegisterPage(new LevelMenuPage(UIHierarchy.Panel, "UI/UILevelMenu"));
         }
 
         public void ShowPage(string pageName, object data = null)

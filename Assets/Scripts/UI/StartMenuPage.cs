@@ -14,17 +14,27 @@ namespace PacmanGame
 
         }
         
+		Text txtLevel;
         protected override void Awake(GameObject go)
         {
             Button btnStart = transform.Find("BtnStart").GetComponent<Button>();
             btnStart.onClick.AddListener(OnBtnStartClick);
+
+			Button btnLevelMenu = transform.Find ("BtnLevelMenu").GetComponent<Button> ();
+			btnLevelMenu.onClick.AddListener (OnBtnLevelMenu);
+
+			txtLevel = transform.Find ("TxtLevel").GetComponent<Text> ();
         }
 
         void OnBtnStartClick()
         {
-            //AmazingGame.Instance.Restart();
-            PageManager.Instance.ShowPage("UIMenu");
+            AmazingGame.Instance.Restart();
+            //PageManager.Instance.ShowPage("UIMenu");
         }
+		void OnBtnLevelMenu()
+		{
+			PageManager.Instance.ShowPage ("UILevelMenu");
+		}
     }
 }
 

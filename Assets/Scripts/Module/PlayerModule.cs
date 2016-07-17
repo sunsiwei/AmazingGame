@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using LitJson;
 
@@ -41,17 +41,10 @@ namespace PacmanGame
             }
         }
 
-		public override void Init ()
-		{
-			base.Init ();
-
-            playerCfg = ConfigManager.Instance.GetCfg("playerCfg");
-            leftPlayerLives = (int)playerCfg["playerCounts"];
-		}
-
         public override void OnLevelLoaded(int levelIndex)
 		{
-			base.OnLevelLoaded (levelIndex);
+			playerCfg = ConfigManager.Instance.GetCfg("playerCfg");
+			leftPlayerLives = (int)playerCfg["playerCounts"];
             
             JsonData levelCfg = ConfigManager.Instance.GetCfg("gameLevelCfg");
             levelPlayerCfg = levelCfg["levels"][levelIndex]["player"];

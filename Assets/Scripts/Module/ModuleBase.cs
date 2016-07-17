@@ -16,10 +16,6 @@ namespace PacmanGame
             name = _name;
         }
 
-		//excute it when every restart game
-        public virtual void Init()
-        { }
-
 		// excute it when every game level loaded
         public virtual void OnLevelLoaded(int index)
         { }

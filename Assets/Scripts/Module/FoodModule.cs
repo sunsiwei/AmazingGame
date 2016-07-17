@@ -21,13 +21,17 @@ namespace PacmanGame
         int normalFoodAmount;
         int alreadyEatFoodCount;
 
+		public delegate void FoodsEatUpHandler ();
+		public event FoodsEatUpHandler EventFoodsEatUp;
+
         public int AlreadyEatFoodCount
         {
             get { return alreadyEatFoodCount; }
             set {
                 alreadyEatFoodCount = value;
                 if (alreadyEatFoodCount >= normalFoodAmount)
-                    AmazingGame.Instance.ToNextLevel();
+					EventFoodsEatUp();
+                    //AmazingGame.Instance.ToNextLevel();
             }
         }
 

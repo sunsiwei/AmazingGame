@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 namespace PacmanGame
@@ -28,15 +28,10 @@ namespace PacmanGame
             }
         }
 
-        public override void Init()
-        {
-			base.Init ();
-            score = 0;
-        }
-
         public override void OnLevelLoaded(int levelIndex)
         {
-            base.OnLevelLoaded(levelIndex);
+			score = 0;
+
             EventScoreUpdate(score);
         }
     }

@@ -19,16 +19,7 @@ namespace PacmanGame
             RegisterModule(new PlayerScoreModule(PlayerScoreModule.name));
             RegisterModule(new EnemyModule(EnemyModule.name));
             RegisterModule(new FoodModule(FoodModule.name));
-
-        }
-
-		//excute it when every restart game
-        public void InitModules()
-        { 
-            foreach(ModuleBase mb in modules.Values)
-            {
-                mb.Init();
-            }
+			RegisterModule(new LevelModule(LevelModule.name));
         }
 
 		// excute it when every game level loaded
