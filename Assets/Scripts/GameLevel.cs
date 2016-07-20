@@ -19,30 +19,13 @@ namespace PacmanGame
             index = _index;
             JsonData levelsCfg = ConfigManager.Instance.GetCfg("gameLevelCfg");
             levelCfg = levelsCfg["levels"][index];
+
+            AmazingGame.Instance.LoadLevel((string)levelCfg["sceneName"], OnLevelLoaded);
         }
 
-        public void OnLevelLoaded()
+        void OnLevelLoaded(int levelSceneIndex)
         {
-            PageManager.Instance.ShowPage("UIMain");
-
-            JsonData playerCfg = ConfigManager.Instance.GetCfg("playerCfg");
-            int playerCtlType = (int)playerCfg["playerControlType"];
-            if (playerCtlType == 0)
-            {
-                ResourcesLoader.LoadOther("SwipeControl");
-            }
-            else if (playerCtlType == 1)
-            {
-                ResourcesLoader.LoadOther("JoystickControl");
-            }
-            
-
             ModuleManager.Instance.OnLevelLoaded(index);
-        }
-
-        public string GetLevelName()
-        {
-            return (string)levelCfg["sceneName"];
         }
     }
 }

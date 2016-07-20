@@ -10,6 +10,8 @@ namespace PacmanGame
 		
 		public static string name = "LevelModule";
 
+        public delegate void LevelLoadedHandle(int levelIndex);
+        public event LevelLoadedHandle EventLevelLoaded;
 
 		JsonData levelsCfg;
 
@@ -17,8 +19,11 @@ namespace PacmanGame
 		string filePath;
 
 		GameLevel level;
-		int currentLevelIndex = 0;
-		int passedLevelIndex = 0;
+		int passedMaxLevelIndex = 0;
+        public int PassedMaxLevelIndex
+        {
+            get { return passedMaxLevelIndex; }
+        }
 
 		public LevelModule(string _name)
 			: base(_name)
@@ -35,40 +40,46 @@ namespace PacmanGame
 				filePath = Application.dataPath;
 			else
 				filePath = Application.dataPath;
-			passedLevelIndex = ReadPassedLevelIndexFromFile ();
+
+            passedMaxLevelIndex = ReadPassedLevelIndexFromFile();
 		}
 
+        
 		public override void OnLevelLoaded (int index)
 		{
-			base.OnLevelLoaded (index);
-
+            EventLevelLoaded(index);
+            PageManager.Instance.ShowPage("UIMain");
 		}
 
 		public void EnterLevel(int levelIndex)
 		{
-			int levelAmount = levelsCfg["levels"].Count;
-			if (levelIndex + 1 >= levelAmount)
+            int levelAmount = levelsCfg.Count;
+			if (levelIndex + 1 > levelAmount)
 			{
 				Debug.Log("The End!!!");
 				return;
 			}
 
 			level = new GameLevel(levelIndex);
-			AmazingGame.Instance.EnterLevel (level.GetLevelName());
 		}
+
+        public void RestartLevel()
+        {
+            int curLevelIndex = level.Index;
+            EnterLevel(curLevelIndex);
+        }
+
+        public GameLevel GetLevel()
+        {
+            return level;
+        }
 
 		public JsonData GetLevelsData()
 		{
 			return levelsCfg;
 		}
-
-		public int GetCurrentLevelIndex()
-		{
-			return currentLevelIndex;
-		}
-
-
-		public int ReadPassedLevelIndexFromFile()
+        
+		int ReadPassedLevelIndexFromFile()
 		{
 			StreamReader sr = null;
 			try
@@ -86,7 +97,7 @@ namespace PacmanGame
 			sr.Dispose();
 			return level;
 		}
-		public void WritePassedLvelIndexToFile(int levelIndex)
+		void WritePassedLvelIndexToFile(int levelIndex)
 		{
 			StreamWriter sw;
 			FileInfo f = new FileInfo(filePath + "/" + fileName);
@@ -105,14 +116,17 @@ namespace PacmanGame
 
 		void EventFoodsEatUp()
 		{
-			int levelAmount = levelsCfg["levels"].Count;
-			if (currentLevelIndex + 1 >= levelAmount)
+            WritePassedLvelIndexToFile(level.Index);
+
+			int levelAmount = levelsCfg.Count;
+			if (level.Index + 1 >= levelAmount)
 			{
 				Debug.Log("The End!!!");
 				return;
 			}
-			currentLevelIndex += 1;
-			EnterLevel (currentLevelIndex);
+           
+            int index = level.Index + 1;
+            EnterLevel(index);
 		}
 	}
 }

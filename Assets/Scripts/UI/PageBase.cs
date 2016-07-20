@@ -24,7 +24,7 @@ namespace PacmanGame
 
         public GameObject gameObject;
         public Transform transform;
-        object data;
+        protected object data;
 
         public PageBase(UIHierarchy _hierarchy, string _path)
         {
@@ -38,7 +38,8 @@ namespace PacmanGame
         { }
         //each time when show.
         protected virtual void Refresh()
-        { }
+        {
+        }
         //active ui
         protected virtual void Active()
         {
@@ -79,6 +80,11 @@ namespace PacmanGame
             GameObject.Destroy(gameObject);
             gameObject = null;
         }
+        public void Reset()
+        {
+            gameObject = null;
+            data = null;
+        }
 
         public bool IsActive
         {
@@ -88,6 +94,7 @@ namespace PacmanGame
         void AnchorPage(GameObject go)
         {
             GameObject _rootCanvas = GameObject.Find("RootCanvas");
+            Debug.Log(_rootCanvas);
             if (_rootCanvas == null)
             {
                 _rootCanvas = ResourcesLoader.LoadOther("RootCanvas");

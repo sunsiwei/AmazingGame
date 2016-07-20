@@ -13,7 +13,21 @@ namespace PacmanGame
         {
 
         }
-        
+
+        int selectedLevelIndex = 0;
+        public int SelectedLevelIndex
+        {
+            set {
+                LevelModule lm = ModuleManager.Instance.GetModule(LevelModule.name) as LevelModule;
+                int levelAmount = lm.GetLevelsData().Count;
+                if(value > levelAmount - 1)
+                    selectedLevelIndex = levelAmount - 1;
+                else
+                    selectedLevelIndex = value;
+                Refresh();
+            }
+        }
+
 		Text txtLevel;
         protected override void Awake(GameObject go)
         {
@@ -26,9 +40,18 @@ namespace PacmanGame
 			txtLevel = transform.Find ("TxtLevel").GetComponent<Text> ();
         }
 
+        protected override void Refresh()
+        {
+            if (gameObject == null)
+                return;
+
+            txtLevel.text = "cur level: " + (selectedLevelIndex + 1);
+        }
+
         void OnBtnStartClick()
         {
-            AmazingGame.Instance.Restart();
+            LevelModule lm = ModuleManager.Instance.GetModule(LevelModule.name) as LevelModule;
+            lm.EnterLevel(selectedLevelIndex);
             //PageManager.Instance.ShowPage("UIMenu");
         }
 		void OnBtnLevelMenu()

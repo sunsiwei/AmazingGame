@@ -21,7 +21,8 @@ namespace PacmanGame
 
         void OnBtnRestartClick()
         {
-            AmazingGame.Instance.Restart();
+            LevelModule lm = ModuleManager.Instance.GetModule(LevelModule.name) as LevelModule;
+            lm.RestartLevel();
         }
     }
 }

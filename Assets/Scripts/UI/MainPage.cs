@@ -9,6 +9,7 @@ namespace PacmanGame
         int score = 0;
         int lives = 0;
         int levelIndex = 0;
+        Vector2 arrowDirection;
 
         public MainPage(UIHierarchy _hierarchy, string _path)
             :base(_hierarchy, _path)
@@ -20,7 +21,8 @@ namespace PacmanGame
             pm.EnentPlayerLivesUpdate += EventLivesUpdate;
             pm.EventPlayerExpectDirectionUpdate += EventPlayerExpectDirectionUpdate;
 
-            AmazingGame.Instance.EventLevelLoaded += EventLevelLoaded;
+            LevelModule lm = ModuleManager.Instance.GetModule(LevelModule.name) as LevelModule;
+            lm.EventLevelLoaded += EventLevelLoaded;
         }
 
         Text txtScore;
@@ -41,9 +43,32 @@ namespace PacmanGame
 
         protected override void Refresh()
         {
+            if (gameObject == null)
+                return;
             txtScore.text = "score: " + score;
             txtLives.text = "lives: " + lives;
             txtLevelIndex.text = "level:" + (levelIndex + 1);
+
+            if (arrowDirection == Vector2.up)
+            {
+                imgArrowLeft.eulerAngles = new Vector3(0, 0, 180);
+                imgArrowRight.eulerAngles = new Vector3(0, 0, 180);
+            }
+            else if (arrowDirection == Vector2.right)
+            {
+                imgArrowLeft.eulerAngles = new Vector3(0, 0, 90);
+                imgArrowRight.eulerAngles = new Vector3(0, 0, 90);
+            }
+            else if (arrowDirection == Vector2.down)
+            {
+                imgArrowLeft.eulerAngles = new Vector3(0, 0, 0);
+                imgArrowRight.eulerAngles = new Vector3(0, 0, 0);
+            }
+            else if (arrowDirection == Vector2.left)
+            {
+                imgArrowLeft.eulerAngles = new Vector3(0, 0, -90);
+                imgArrowRight.eulerAngles = new Vector3(0, 0, -90);
+            }
         }
 
         void OnBtnMenuClick()
@@ -75,26 +100,8 @@ namespace PacmanGame
 
         void EventPlayerExpectDirectionUpdate(Vector2 expectDir)
         {
-            if (expectDir == Vector2.up)
-            {
-                imgArrowLeft.eulerAngles = new Vector3(0,0,180);
-                imgArrowRight.eulerAngles = new Vector3(0, 0, 180);
-            }
-            else if (expectDir == Vector2.right)
-            {
-                imgArrowLeft.eulerAngles = new Vector3(0,0,90);
-                imgArrowRight.eulerAngles = new Vector3(0, 0, 90);
-            }
-            else if (expectDir == Vector2.down)
-            {
-                imgArrowLeft.eulerAngles = new Vector3(0, 0, 0);
-                imgArrowRight.eulerAngles = new Vector3(0, 0, 0);
-            }
-            else if (expectDir == Vector2.left)
-            {
-                imgArrowLeft.eulerAngles = new Vector3(0, 0, -90);
-                imgArrowRight.eulerAngles = new Vector3(0, 0, -90);
-            }
+            arrowDirection = expectDir;
+            Refresh();
         }
     }
 }

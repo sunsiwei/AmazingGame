@@ -45,6 +45,16 @@ namespace PacmanGame
 		{
 			playerCfg = ConfigManager.Instance.GetCfg("playerCfg");
 			leftPlayerLives = (int)playerCfg["playerCounts"];
+
+            int playerCtlType = (int)playerCfg["playerControlType"];
+            if (playerCtlType == 0)
+            {
+                ResourcesLoader.LoadOther("SwipeControl");
+            }
+            else if (playerCtlType == 1)
+            {
+                ResourcesLoader.LoadOther("JoystickControl");
+            }
             
             JsonData levelCfg = ConfigManager.Instance.GetCfg("gameLevelCfg");
             levelPlayerCfg = levelCfg["levels"][levelIndex]["player"];
@@ -55,13 +65,18 @@ namespace PacmanGame
 
         public void OnPlayerDead()
         {
+            EnemyModule em = ModuleManager.Instance.GetModule(EnemyModule.name) as EnemyModule;
             if (LeftPlayerLives <= 0)
             {
-                AmazingGame.Instance.GameOver();
+                AmazingGame.Instance.StopAllCoroutines();
+                Debug.Log("Game over!!!");
+
+                em.MakeAllPause(true);
+
+                PageManager.Instance.ShowPage("UIGameOver");
                 return;
             }
 
-            EnemyModule em = ModuleManager.Instance.GetModule(EnemyModule.name) as EnemyModule;
             em.MakeAllHome();
 
             AmazingGame.Instance.StartCoroutine(DelayRelive());

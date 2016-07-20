@@ -19,15 +19,21 @@ namespace PacmanGame
 			RegisterPage(new LevelMenuPage(UIHierarchy.Panel, "UI/UILevelMenu"));
         }
 
-        public void ShowPage(string pageName, object data = null)
+        public void Reset()
+        { 
+
+        }
+
+        public PageBase ShowPage(string pageName, object data = null)
         {
             if (pages.ContainsKey(pageName) == false)
             {
                 Debug.LogErrorFormat("error: uipage: {0} has not register!!!", pageName);
-                return;
+                return null;
             }
             PageBase page = pages[pageName];
             page.Show(data);
+            return page;
         }
 
         public void HidePage(string pageName)

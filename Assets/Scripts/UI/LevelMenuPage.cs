@@ -20,39 +20,64 @@ namespace PacmanGame
 			Button btnClose = transform.Find("BtnClose").GetComponent<Button>();
 			btnClose.onClick.AddListener(OnBtnClose);
 
-			LevelModule lm = ModuleManager.Instance.GetModule (LevelModule.name) as LevelModule;
-			JsonData levelsData = lm.GetLevelsData ();
-			Transform levelList = transform.Find ("LevelList");
-			levelItems = new Transform[levelsData.Count];
-
-			for(int index=0; index<levelItems.Length; index++)
-			{
-				GameObject item = ResourcesLoader.LoadUI("LevelItem");
-				item.name = "LevelItem"+index;
-				item.transform.SetParent(levelList, false);
-				item.transform.localPosition = new Vector2(index * 300, 0);
-				Text txt = item.transform.Find("Button").Find("Text").GetComponent<Text>();
-				txt.text = "level: " + index;
-				levelItems[index] = item.transform;
-			}
+            InitLevelItem();
 		}
 
 		protected override void Refresh ()
 		{
 			LevelModule lm = ModuleManager.Instance.GetModule (LevelModule.name) as LevelModule;
-			int curLevelIndex = lm.GetCurrentLevelIndex ();
+            int passedMaxLevelIndex = lm.PassedMaxLevelIndex;
 			for(int i=0; i<levelItems.Length; i++)
 			{
 				Transform imgLock = levelItems[i].Find("ImgLock");
-				if(i <= curLevelIndex)
+                if (i <= passedMaxLevelIndex+1)
 				{
 					imgLock.gameObject.SetActive(false);
 				}else
 				{
 					imgLock.gameObject.SetActive(true);
 				}
+
+                if (i <= passedMaxLevelIndex+1)
+                {
+                    Button btn = levelItems[i].Find("Button").GetComponent<Button>();
+                    int levelIndex = i;
+                    btn.onClick.AddListener(delegate()
+                    {
+                        OnLevelItemClick(levelIndex);
+                    });
+                }
 			}
 		}
+
+        void InitLevelItem()
+        {
+            LevelModule lm = ModuleManager.Instance.GetModule(LevelModule.name) as LevelModule;
+            JsonData levelsData = lm.GetLevelsData();
+            int passedMaxLevelIndex = lm.PassedMaxLevelIndex;
+            levelItems = new Transform[levelsData.Count];
+            
+            Transform levelList = transform.Find("LevelList");
+            
+            for (int index = 0; index < levelItems.Length; index++)
+            {
+                GameObject item = ResourcesLoader.LoadUI("LevelItem");
+                item.name = "LevelItem" + index;
+                item.transform.SetParent(levelList, false);
+
+                Text txt = item.transform.Find("Button").Find("Text").GetComponent<Text>();
+                txt.text = "level: " + (index + 1);
+                levelItems[index] = item.transform;
+            }
+        }
+        void OnLevelItemClick(int index)
+        {
+            Debug.Log(index);
+            StartMenuPage smp = PageManager.Instance.ShowPage("UIStartMenu") as StartMenuPage;
+            smp.SelectedLevelIndex = index;
+
+            Hide();
+        }
 		
 		void OnBtnClose()
 		{
