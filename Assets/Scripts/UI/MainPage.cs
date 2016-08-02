@@ -21,8 +21,7 @@ namespace PacmanGame
             pm.EnentPlayerLivesUpdate += EventLivesUpdate;
             pm.EventPlayerExpectDirectionUpdate += EventPlayerExpectDirectionUpdate;
 
-            LevelModule lm = ModuleManager.Instance.GetModule(LevelModule.name) as LevelModule;
-            lm.EventLevelLoaded += EventLevelLoaded;
+            GameLevelManager.Instance.EventLevelLoaded += EventLevelLoaded;
         }
 
         Text txtScore;
@@ -73,6 +72,8 @@ namespace PacmanGame
 
         void OnBtnMenuClick()
         {
+            
+
             PageManager.Instance.ShowPage("UIMenu");
             //EnemyAISearch a = UnityEngine.GameObject.Find("Orange2").GetComponent<EnemyAISearch>();
             //if (a.PauseSearch)

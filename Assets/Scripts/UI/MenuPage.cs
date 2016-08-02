@@ -31,12 +31,16 @@ namespace PacmanGame
 
         void OnBtnRestartClick()
         {
-            LevelModule lm = ModuleManager.Instance.GetModule(LevelModule.name) as LevelModule;
-            lm.RestartLevel();
+            GameLevelManager.Instance.RestartLevel();
         }
 
         void OnBtnClose()
         {
+            EnemyModule em = ModuleManager.Instance.GetModule(EnemyModule.name) as EnemyModule;
+            em.MakeAllPause(false);
+            PlayerModule pm = ModuleManager.Instance.GetModule(PlayerModule.name) as PlayerModule;
+            pm.MakePause(false);
+
             Hide();
         }
     }

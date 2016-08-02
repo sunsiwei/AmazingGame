@@ -20,7 +20,14 @@ namespace PacmanGame
         public bool Pause
         {
             get { return pause; }
-            set { pause = value; }
+            set { 
+                pause = value;
+                if (value == true)
+                {
+                    Rigidbody2D rb = GetComponent<Rigidbody2D>();
+                    rb.velocity = Vector2.zero;
+                }
+            }
         }
         public double Speed
         {

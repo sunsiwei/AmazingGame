@@ -15,7 +15,7 @@ namespace PacmanGame
         {
             if (co.CompareTag("Player"))
             {
-                if (eas.BehaviorType == PacmanGame.BehaviorType.Afraid)
+                if (eas.BehaviorType == BehaviorType.Afraid)
                 {
                     eas.MakeHomeForDead();
                 }

@@ -86,7 +86,8 @@ namespace PacmanGame
         public bool PauseSearch
         {
             get { return pauseSearch; }
-            set { 
+            set {
+                behaviorController.Pause = value;
                 pauseSearch = value;
                 if (value == true)
                 {

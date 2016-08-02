@@ -21,8 +21,7 @@ namespace PacmanGame
 
         void OnBtnRestartClick()
         {
-            LevelModule lm = ModuleManager.Instance.GetModule(LevelModule.name) as LevelModule;
-            lm.RestartLevel();
+            GameLevelManager.Instance.RestartLevel();
         }
     }
 }

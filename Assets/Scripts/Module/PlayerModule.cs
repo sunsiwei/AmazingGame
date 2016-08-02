@@ -110,6 +110,12 @@ namespace PacmanGame
             pm.ImmediateMoveTo(new Vector2((int)levelPlayerCfg["position"][0], (int)levelPlayerCfg["position"][1]));
             pm.ExpectDirection = new Vector2((int)levelPlayerCfg["direction"][0], (int)levelPlayerCfg["direction"][1]);
         }
+
+        public void MakePause(bool b)
+        {
+            PlayerMove pm = player.GetComponent<PlayerMove>();
+            pm.Pause = b;
+        }
     }
 }
 

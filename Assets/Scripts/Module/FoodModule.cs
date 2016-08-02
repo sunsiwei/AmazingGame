@@ -15,14 +15,8 @@ namespace PacmanGame
             
         }
 
-        //public delegate void FoodEatUpHandler();
-        //public event FoodEatUpHandler EventEatUp;
-
         int normalFoodAmount;
         int alreadyEatFoodCount;
-
-		public delegate void FoodsEatUpHandler ();
-		public event FoodsEatUpHandler EventFoodsEatUp;
 
         public int AlreadyEatFoodCount
         {
@@ -30,8 +24,7 @@ namespace PacmanGame
             set {
                 alreadyEatFoodCount = value;
                 if (alreadyEatFoodCount >= normalFoodAmount)
-					EventFoodsEatUp();
-                    //AmazingGame.Instance.ToNextLevel();
+                    GameLevelManager.Instance.LevelPassed();
             }
         }
 
@@ -40,6 +33,8 @@ namespace PacmanGame
             base.OnLevelLoaded(index);
             JsonData levelCfg = ConfigManager.Instance.GetCfg("gameLevelCfg");
             normalFoodAmount = (int)levelCfg["levels"][index]["FoodAmount"];
+
+            alreadyEatFoodCount = 0;
 
             AmazingGame.Instance.StartCoroutine(DelayAppearSpecialFood(index));
         }

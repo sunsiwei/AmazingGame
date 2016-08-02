@@ -14,18 +14,24 @@ namespace PacmanGame
 
         JsonData levelCfg;
 
+        public string SceneName
+        {
+            get { return (string)levelCfg["sceneName"]; }
+        }
+
         public GameLevel(int _index)
         {
             index = _index;
             JsonData levelsCfg = ConfigManager.Instance.GetCfg("gameLevelCfg");
             levelCfg = levelsCfg["levels"][index];
-
-            AmazingGame.Instance.LoadLevel((string)levelCfg["sceneName"], OnLevelLoaded);
         }
 
-        void OnLevelLoaded(int levelSceneIndex)
+        public void MakePause(bool b)
         {
-            ModuleManager.Instance.OnLevelLoaded(index);
+            EnemyModule em = ModuleManager.Instance.GetModule(EnemyModule.name) as EnemyModule;
+            em.MakeAllPause(b);
+            PlayerModule pm = ModuleManager.Instance.GetModule(PlayerModule.name) as PlayerModule;
+            pm.MakePause(b);
         }
     }
 }

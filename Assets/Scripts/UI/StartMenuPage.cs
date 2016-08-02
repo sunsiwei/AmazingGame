@@ -18,8 +18,8 @@ namespace PacmanGame
         public int SelectedLevelIndex
         {
             set {
-                LevelModule lm = ModuleManager.Instance.GetModule(LevelModule.name) as LevelModule;
-                int levelAmount = lm.GetLevelsData().Count;
+
+                int levelAmount = GameLevelManager.Instance.LevelsCount;
                 if(value > levelAmount - 1)
                     selectedLevelIndex = levelAmount - 1;
                 else
@@ -50,8 +50,7 @@ namespace PacmanGame
 
         void OnBtnStartClick()
         {
-            LevelModule lm = ModuleManager.Instance.GetModule(LevelModule.name) as LevelModule;
-            lm.EnterLevel(selectedLevelIndex);
+            GameLevelManager.Instance.EnterLevel(selectedLevelIndex);
             //PageManager.Instance.ShowPage("UIMenu");
         }
 		void OnBtnLevelMenu()

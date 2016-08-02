@@ -25,8 +25,7 @@ namespace PacmanGame
 
 		protected override void Refresh ()
 		{
-			LevelModule lm = ModuleManager.Instance.GetModule (LevelModule.name) as LevelModule;
-            int passedMaxLevelIndex = lm.PassedMaxLevelIndex;
+            int passedMaxLevelIndex = GameLevelManager.Instance.PassedMaxLevelIndex;
 			for(int i=0; i<levelItems.Length; i++)
 			{
 				Transform imgLock = levelItems[i].Find("ImgLock");
@@ -52,10 +51,9 @@ namespace PacmanGame
 
         void InitLevelItem()
         {
-            LevelModule lm = ModuleManager.Instance.GetModule(LevelModule.name) as LevelModule;
-            JsonData levelsData = lm.GetLevelsData();
-            int passedMaxLevelIndex = lm.PassedMaxLevelIndex;
-            levelItems = new Transform[levelsData.Count];
+            int levelAmount = GameLevelManager.Instance.LevelsCount;
+            int passedMaxLevelIndex = GameLevelManager.Instance.PassedMaxLevelIndex;
+            levelItems = new Transform[levelAmount];
             
             Transform levelList = transform.Find("LevelList");
             
