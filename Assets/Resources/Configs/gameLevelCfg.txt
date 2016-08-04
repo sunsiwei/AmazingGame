@@ -2,12 +2,15 @@
     "levels": [
         {
             "index": 0,
-            "sceneName": "Level1",
+            "sceneName": "Level",
+			"mapName": "map1",
             "mazeWidth": 232,
             "mazeHeight": 256,
 			"FoodAmount":1,
 			"player":{
 				"name":"pacman",
+				"playerCounts":1,
+				"playerReliveDelayTime":4,
 				"position": [
 					11,
 					11
@@ -18,8 +21,7 @@
 				],	
 				"speed": 0.12,
 				"exsitedSpeed": 0.13,
-				"exsitedDuration":5,
-				"reliveDuration":5
+				"exsitedDuration":5
 			},
             "enemys": [
                 {
@@ -75,12 +77,15 @@
         },
 		{
             "index": 1,
-            "sceneName": "Level2",
+            "sceneName": "Level",
+			"mapName": "map1",
             "mazeWidth": 232,
             "mazeHeight": 256,
 			"FoodAmount":1,
 			"player":{
 				"name":"pacman",
+				"playerCounts":1,
+				"playerReliveDelayTime":4,
 				"position": [
 					11,
 					11
@@ -91,8 +96,7 @@
 				],	
 				"speed": 0.12,
 				"exsitedSpeed": 0.13,
-				"exsitedDuration":5,
-				"reliveDuration":5
+				"exsitedDuration":5
 			},
             "enemys": [
                 {
@@ -196,12 +200,15 @@
         },
 		{
             "index": 2,
-            "sceneName": "Level3",
+            "sceneName": "Level",
+			"mapName": "map1",
             "mazeWidth": 232,
             "mazeHeight": 256,
 			"FoodAmount":1,
 			"player":{
 				"name":"pacman",
+				"playerCounts":1,
+				"playerReliveDelayTime":4,
 				"position": [
 					11,
 					11
@@ -212,8 +219,7 @@
 				],	
 				"speed": 0.12,
 				"exsitedSpeed": 0.13,
-				"exsitedDuration":5,
-				"reliveDuration":5
+				"exsitedDuration":5
 			},
             "enemys": [
                 {

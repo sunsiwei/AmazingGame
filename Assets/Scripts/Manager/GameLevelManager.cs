@@ -20,6 +20,7 @@ namespace PacmanGame
         }
 
         GameLevel level = null;
+        public GameLevel Level { get { return level; } }
 
         public delegate void LevelLoadedHandle(int levelIndex);
         public event LevelLoadedHandle EventLevelLoaded;
@@ -51,10 +52,9 @@ namespace PacmanGame
             level = new GameLevel(levelIndex);
             AmazingGame.Instance.LoadLevel(level.SceneName, OnLevelLoaded);
         }
-        void OnLevelLoaded(int index)
+        void OnLevelLoaded(int sceneIndex)
         {
-            ModuleManager.Instance.OnLevelLoaded(level.Index);
-            PageManager.Instance.ShowPage("UIMain");
+            level.OnLevelLoaded(level.Index);
 
             if (EventLevelLoaded != null)
                 EventLevelLoaded(level.Index);

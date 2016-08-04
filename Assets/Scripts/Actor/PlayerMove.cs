@@ -69,9 +69,9 @@ namespace PacmanGame
                     }
                     else
                     {
-                        curDirection = -curDirection;
-                        expectDirection = curDirection;
-                        nextPos = (Vector2)transform.position + curDirection;
+                        //curDirection = -curDirection;
+                        //expectDirection = curDirection;
+                        //nextPos = (Vector2)transform.position + curDirection;
                     }
                 }
             }

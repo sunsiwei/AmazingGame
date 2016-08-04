@@ -26,7 +26,9 @@ namespace PacmanGame
         protected override void Active()
         {
             base.Active();
-            transform.DOMove(new Vector2(0, 1500), 1).From().SetEase(Ease.InCirc);
+            //transform.DOMove(new Vector2(0, 1500), 1).From();
+
+            GameLevelManager.Instance.Level.MakePause(true);
         }
 
         void OnBtnRestartClick()
@@ -36,12 +38,9 @@ namespace PacmanGame
 
         void OnBtnClose()
         {
-            EnemyModule em = ModuleManager.Instance.GetModule(EnemyModule.name) as EnemyModule;
-            em.MakeAllPause(false);
-            PlayerModule pm = ModuleManager.Instance.GetModule(PlayerModule.name) as PlayerModule;
-            pm.MakePause(false);
-
             Hide();
+
+            GameLevelManager.Instance.Level.MakePause(false);
         }
     }
 }

@@ -16,7 +16,6 @@ namespace PacmanGame
         public delegate void PlayerLivesUpdateHandler(int count);
         public event PlayerLivesUpdateHandler EnentPlayerLivesUpdate;
 
-		JsonData playerCfg;
         JsonData levelPlayerCfg;
 		GameObject player;
 
@@ -43,10 +42,12 @@ namespace PacmanGame
 
         public override void OnLevelLoaded(int levelIndex)
 		{
-			playerCfg = ConfigManager.Instance.GetCfg("playerCfg");
-			leftPlayerLives = (int)playerCfg["playerCounts"];
+            JsonData levelCfg = ConfigManager.Instance.GetCfg("gameLevelCfg");
+            levelPlayerCfg = levelCfg["levels"][levelIndex]["player"];
 
-            int playerCtlType = (int)playerCfg["playerControlType"];
+            leftPlayerLives = (int)levelPlayerCfg["playerCounts"];
+
+            int playerCtlType = 0;
             if (playerCtlType == 0)
             {
                 ResourcesLoader.LoadOther("SwipeControl");
@@ -55,9 +56,6 @@ namespace PacmanGame
             {
                 ResourcesLoader.LoadOther("JoystickControl");
             }
-            
-            JsonData levelCfg = ConfigManager.Instance.GetCfg("gameLevelCfg");
-            levelPlayerCfg = levelCfg["levels"][levelIndex]["player"];
 
             EnentPlayerLivesUpdate(leftPlayerLives);
             AddPlayer();
@@ -83,7 +81,7 @@ namespace PacmanGame
         }
         IEnumerator DelayRelive()
         {
-            yield return new WaitForSeconds((int)levelPlayerCfg["reliveDuration"]);
+            yield return new WaitForSeconds((int)levelPlayerCfg["playerReliveDelayTime"]);
 
             AddPlayer();
             EnemyModule em = ModuleManager.Instance.GetModule(EnemyModule.name) as EnemyModule;

@@ -26,6 +26,14 @@ namespace PacmanGame
             levelCfg = levelsCfg["levels"][index];
         }
 
+        public void OnLevelLoaded(int index)
+        {
+            GameObject map = ResourcesLoader.LoadMap((string)levelCfg["mapName"]);
+
+            ModuleManager.Instance.OnLevelLoaded(index);
+            PageManager.Instance.ShowPage("UIMain");
+        }
+
         public void MakePause(bool b)
         {
             EnemyModule em = ModuleManager.Instance.GetModule(EnemyModule.name) as EnemyModule;
