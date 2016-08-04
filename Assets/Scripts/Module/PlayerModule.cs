@@ -47,7 +47,7 @@ namespace PacmanGame
 
             leftPlayerLives = (int)levelPlayerCfg["playerCounts"];
 
-            int playerCtlType = 0;
+            int playerCtlType = 1;
             if (playerCtlType == 0)
             {
                 ResourcesLoader.LoadOther("SwipeControl");

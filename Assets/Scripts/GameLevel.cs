@@ -40,6 +40,8 @@ namespace PacmanGame
             em.MakeAllPause(b);
             PlayerModule pm = ModuleManager.Instance.GetModule(PlayerModule.name) as PlayerModule;
             pm.MakePause(b);
+			FoodModule fm = ModuleManager.Instance.GetModule (FoodModule.name) as FoodModule;
+			fm.MakePause (b);
         }
     }
 }

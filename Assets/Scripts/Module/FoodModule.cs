@@ -62,8 +62,19 @@ namespace PacmanGame
                     time = 0;
                 }
                 yield return 0;
+
+				while(pause)
+				{
+					yield return 0;
+				}
             }
         }
+
+		bool pause = false;
+		public void MakePause(bool b)
+		{
+			pause = b;
+		}
     }
 }
 
