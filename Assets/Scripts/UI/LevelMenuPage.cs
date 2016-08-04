@@ -41,6 +41,7 @@ namespace PacmanGame
                 {
                     Button btn = levelItems[i].Find("Button").GetComponent<Button>();
                     int levelIndex = i;
+					btn.onClick.RemoveAllListeners();
                     btn.onClick.AddListener(delegate()
                     {
                         OnLevelItemClick(levelIndex);
