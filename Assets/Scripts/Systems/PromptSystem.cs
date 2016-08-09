@@ -3,11 +3,11 @@ using System.Collections;
 
 namespace PacmanGame
 {
-    public class PromptModule : ModuleBase
+    public class PromptSystem : SystemBase
     {
-        public static string name = "PromptModule";
+        public static string name = "PromptSystem";
 
-        public PromptModule(string _name)
+        public PromptSystem(string _name)
             :base(_name)
         {
 
@@ -16,6 +16,7 @@ namespace PacmanGame
         public void Prompt(string txt)
         {
             PromptPage pp = PageManager.Instance.GetPage("UIPrompt") as PromptPage;
+            Debug.Log(txt);
             pp.PromptText(txt);
         }
     }

@@ -4,10 +4,10 @@ using LitJson;
 
 namespace PacmanGame
 {
-    public class PlayerModule : ModuleBase
+    public class LevelPlayerModule : LevelModuleBase
     {
-        public static string name = "PlayerModule";
-        public PlayerModule(string _name)
+        public static string name = "LevelPlayerCtl";
+        public LevelPlayerModule(string _name)
             : base(_name)
         {
 
@@ -40,10 +40,12 @@ namespace PacmanGame
             }
         }
 
-        public override void OnLevelLoaded(int levelIndex)
+        public override void OnLevelLoaded(GameLevel level)
 		{
-            JsonData levelCfg = ConfigManager.Instance.GetCfg("gameLevelCfg");
-            levelPlayerCfg = levelCfg["levels"][levelIndex]["player"];
+            base.OnLevelLoaded(level);
+            int levelIndex = level.Index;
+
+            levelPlayerCfg = level.JsonPlayer;
 
             leftPlayerLives = (int)levelPlayerCfg["playerCounts"];
 
@@ -63,7 +65,7 @@ namespace PacmanGame
 
         public void OnPlayerDead()
         {
-            EnemyModule em = ModuleManager.Instance.GetModule(EnemyModule.name) as EnemyModule;
+            LevelEnemyModule em = LevelModuleManager.Instance.GetModule(LevelEnemyModule.name) as LevelEnemyModule;
             if (LeftPlayerLives <= 0)
             {
                 AmazingGame.Instance.StopAllCoroutines();
@@ -84,7 +86,7 @@ namespace PacmanGame
             yield return new WaitForSeconds((int)levelPlayerCfg["playerReliveDelayTime"]);
 
             AddPlayer();
-            EnemyModule em = ModuleManager.Instance.GetModule(EnemyModule.name) as EnemyModule;
+            LevelEnemyModule em = LevelModuleManager.Instance.GetModule(LevelEnemyModule.name) as LevelEnemyModule;
             em.MakeAllContivueSearch();
         }
 

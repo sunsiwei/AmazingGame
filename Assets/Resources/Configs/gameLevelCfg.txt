@@ -1,325 +1,328 @@
 ﻿{
-    "levels": [
-        {
-            "index": 0,
-            "sceneName": "Level",
-			"mapName": "map1",
-            "mazeWidth": 232,
-            "mazeHeight": 256,
-			"FoodAmount":1,
-			"player":{
-				"name":"pacman",
-				"playerCounts":1,
-				"playerReliveDelayTime":4,
-				"position": [
-					11,
-					11
+	"normal" : {
+		"levels": [
+			{
+				"index": 0,
+				"sceneName": "Level",
+				"mapName": "map1",
+				"mazeWidth": 232,
+				"mazeHeight": 256,
+				"foodAmount":1,
+				"player":{
+					"name":"pacman",
+					"playerCounts":1,
+					"playerReliveDelayTime":4,
+					"position": [
+						11,
+						11
+					],
+					"direction": [
+						1,
+						0
+					],	
+					"speed": 0.12,
+					"exsitedSpeed": 0.13,
+					"exsitedDuration":5
+				},
+				"enemys": [
+					{
+						"name": "Direct",
+						"searchType":0,
+						"position": [
+							13,
+							17
+						],
+						"speed": 0.1,
+						"afraidSpeed": 0.12,
+						"reliveDuration": 2,
+						"score":50,
+						"scatterPosition": [
+							27,
+							30
+						]
+					}
 				],
-				"direction": [
-					1,
-					0
-				],	
-				"speed": 0.12,
-				"exsitedSpeed": 0.13,
-				"exsitedDuration":5
-			},
-            "enemys": [
-                {
-                    "name": "Direct",
-					"searchType":0,
-                    "position": [
-                        13,
-                        17
-                    ],
-                    "speed": 0.1,
-                    "afraidSpeed": 0.12,
-					"reliveDuration": 2,
-					"score":50,
-                    "scatterPosition": [
-                        27,
-                        30
-                    ]
-                }
-            ],
-            "enemyBehaviors": [
-                {
-                    "type": 0,
-                    "duration": 7
-                },
-                {
-                    "type": 1,
-                    "duration": 7
-                },
-                {
-                    "type": 0,
-                    "duration": 5
-                },
-                {
-                    "type": 1,
-                    "duration": 5
-                },
-                {
-                    "type": 0,
-                    "duration": 500
-                }
-            ],
-			"specialFoods":[
-				"AccelerateFood",
-				"EnemyPauseFood",
-				"ExcitedFood"
-			],
-			"specialFoodPositions":[
-				[7,26],
-				[22,26],
-				[2,8],
-				[15,17]
-			]
-        },
-		{
-            "index": 1,
-            "sceneName": "Level",
-			"mapName": "map1",
-            "mazeWidth": 232,
-            "mazeHeight": 256,
-			"FoodAmount":1,
-			"player":{
-				"name":"pacman",
-				"playerCounts":1,
-				"playerReliveDelayTime":4,
-				"position": [
-					11,
-					11
+				"enemyBehaviors": [
+					{
+						"type": 0,
+						"duration": 7
+					},
+					{
+						"type": 1,
+						"duration": 7
+					},
+					{
+						"type": 0,
+						"duration": 5
+					},
+					{
+						"type": 1,
+						"duration": 5
+					},
+					{
+						"type": 0,
+						"duration": 500
+					}
 				],
-				"direction": [
-					1,
-					0
-				],	
-				"speed": 0.12,
-				"exsitedSpeed": 0.13,
-				"exsitedDuration":5
-			},
-            "enemys": [
-                {
-                    "name": "Direct",
-					"searchType":0,
-                    "position": [
-                        13,
-                        17
-                    ],
-                    "speed": 0.1,
-                    "afraidSpeed": 0.12,
-					"reliveDuration": 2,
-					"score":50,
-                    "scatterPosition": [
-                        27,
-                        30
-                    ]
-                },
-				{
-                    "name": "Front",
-					"searchType":1,
-                    "position": [
-                        14,
-                        17
-                    ],
-                    "speed": 0.1,
-                    "afraidSpeed": 0.12,
-					"reliveDuration": 2,
-					"score":50,
-                    "scatterPosition": [
-                        27,
-                        2
-                    ]
-                },
-				{
-                    "name": "Smart",
-					"searchType":2,
-                    "position": [
-                        15,
-                        17
-                    ],
-                    "speed": 0.1,
-                    "afraidSpeed": 0.12,
-					"reliveDuration": 2,
-					"score":50,
-                    "scatterPosition": [
-                        2,
-                        30
-                    ]
-                },
-				{
-                    "name": "Lazy",
-					"searchType":3,
-                    "position": [
-                        16,
-                        17
-                    ],
-                    "speed": 0.1,
-                    "afraidSpeed": 0.12,
-					"reliveDuration": 2,
-					"score":50,
-                    "scatterPosition": [
-                        2,
-                        2
-                    ]
-                }
-            ],
-            "enemyBehaviors": [
-                {
-                    "type": 0,
-                    "duration": 7
-                },
-                {
-                    "type": 1,
-                    "duration": 7
-                },
-                {
-                    "type": 0,
-                    "duration": 5
-                },
-                {
-                    "type": 1,
-                    "duration": 5
-                },
-                {
-                    "type": 0,
-                    "duration": 500
-                }
-            ],
-			"specialFoods":[
-				"AccelerateFood",
-				"EnemyPauseFood",
-				"ExcitedFood"
-			],
-			"specialFoodPositions":[
-				[7,26],
-				[22,26],
-				[2,8],
-				[15,17]
-			]
-        },
-		{
-            "index": 2,
-            "sceneName": "Level",
-			"mapName": "map1",
-            "mazeWidth": 232,
-            "mazeHeight": 256,
-			"FoodAmount":1,
-			"player":{
-				"name":"pacman",
-				"playerCounts":1,
-				"playerReliveDelayTime":4,
-				"position": [
-					11,
-					11
+				"specialFoods":[
+					"AccelerateFood",
+					"EnemyPauseFood",
+					"ExcitedFood"
 				],
-				"direction": [
-					1,
-					0
-				],	
-				"speed": 0.12,
-				"exsitedSpeed": 0.13,
-				"exsitedDuration":5
+				"specialFoodPositions":[
+					[7,26],
+					[22,26],
+					[2,8],
+					[15,17]
+				]
 			},
-            "enemys": [
-                {
-                    "name": "Direct",
-					"searchType":0,
-                    "position": [
-                        13,
-                        17
-                    ],
-                    "speed": 0.1,
-                    "afraidSpeed": 0.12,
-					"reliveDuration": 2,
-					"score":50,
-                    "scatterPosition": [
-                        27,
-                        30
-                    ]
-                },
-				{
-                    "name": "Front",
-					"searchType":1,
-                    "position": [
-                        14,
-                        17
-                    ],
-                    "speed": 0.1,
-                    "afraidSpeed": 0.12,
-					"reliveDuration": 2,
-					"score":50,
-                    "scatterPosition": [
-                        27,
-                        2
-                    ]
-                },
-				{
-                    "name": "Smart",
-					"searchType":2,
-                    "position": [
-                        15,
-                        17
-                    ],
-                    "speed": 0.1,
-                    "afraidSpeed": 0.12,
-					"reliveDuration": 2,
-					"score":50,
-                    "scatterPosition": [
-                        2,
-                        30
-                    ]
-                },
-				{
-                    "name": "Lazy",
-					"searchType":3,
-                    "position": [
-                        16,
-                        17
-                    ],
-                    "speed": 0.1,
-                    "afraidSpeed": 0.12,
-					"reliveDuration": 2,
-					"score":50,
-                    "scatterPosition": [
-                        2,
-                        2
-                    ]
-                }
-            ],
-            "enemyBehaviors": [
-                {
-                    "type": 0,
-                    "duration": 7
-                },
-                {
-                    "type": 1,
-                    "duration": 7
-                },
-                {
-                    "type": 0,
-                    "duration": 5
-                },
-                {
-                    "type": 1,
-                    "duration": 5
-                },
-                {
-                    "type": 0,
-                    "duration": 500
-                }
-            ],
-			"specialFoods":[
-				"AccelerateFood",
-				"EnemyPauseFood",
-				"ExcitedFood"
-			],
-			"specialFoodPositions":[
-				[7,26],
-				[22,26],
-				[2,8],
-				[15,17]
-			]
-        }
-    ]
+			{
+				"index": 1,
+				"sceneName": "Level",
+				"mapName": "map1",
+				"mazeWidth": 232,
+				"mazeHeight": 256,
+				"foodAmount":1,
+				"player":{
+					"name":"pacman",
+					"playerCounts":1,
+					"playerReliveDelayTime":4,
+					"position": [
+						11,
+						11
+					],
+					"direction": [
+						1,
+						0
+					],	
+					"speed": 0.12,
+					"exsitedSpeed": 0.13,
+					"exsitedDuration":5
+				},
+				"enemys": [
+					{
+						"name": "Direct",
+						"searchType":0,
+						"position": [
+							13,
+							17
+						],
+						"speed": 0.1,
+						"afraidSpeed": 0.12,
+						"reliveDuration": 2,
+						"score":50,
+						"scatterPosition": [
+							27,
+							30
+						]
+					},
+					{
+						"name": "Front",
+						"searchType":1,
+						"position": [
+							14,
+							17
+						],
+						"speed": 0.1,
+						"afraidSpeed": 0.12,
+						"reliveDuration": 2,
+						"score":50,
+						"scatterPosition": [
+							27,
+							2
+						]
+					},
+					{
+						"name": "Smart",
+						"searchType":2,
+						"position": [
+							15,
+							17
+						],
+						"speed": 0.1,
+						"afraidSpeed": 0.12,
+						"reliveDuration": 2,
+						"score":50,
+						"scatterPosition": [
+							2,
+							30
+						]
+					},
+					{
+						"name": "Lazy",
+						"searchType":3,
+						"position": [
+							16,
+							17
+						],
+						"speed": 0.1,
+						"afraidSpeed": 0.12,
+						"reliveDuration": 2,
+						"score":50,
+						"scatterPosition": [
+							2,
+							2
+						]
+					}
+				],
+				"enemyBehaviors": [
+					{
+						"type": 0,
+						"duration": 7
+					},
+					{
+						"type": 1,
+						"duration": 7
+					},
+					{
+						"type": 0,
+						"duration": 5
+					},
+					{
+						"type": 1,
+						"duration": 5
+					},
+					{
+						"type": 0,
+						"duration": 500
+					}
+				],
+				"specialFoods":[
+					"AccelerateFood",
+					"EnemyPauseFood",
+					"ExcitedFood"
+				],
+				"specialFoodPositions":[
+					[7,26],
+					[22,26],
+					[2,8],
+					[15,17]
+				]
+			},
+			{
+				"index": 2,
+				"sceneName": "Level",
+				"mapName": "map1",
+				"mazeWidth": 232,
+				"mazeHeight": 256,
+				"foodAmount":1,
+				"player":{
+					"name":"pacman",
+					"playerCounts":1,
+					"playerReliveDelayTime":4,
+					"position": [
+						11,
+						11
+					],
+					"direction": [
+						1,
+						0
+					],	
+					"speed": 0.12,
+					"exsitedSpeed": 0.13,
+					"exsitedDuration":5
+				},
+				"enemys": [
+					{
+						"name": "Direct",
+						"searchType":0,
+						"position": [
+							13,
+							17
+						],
+						"speed": 0.1,
+						"afraidSpeed": 0.12,
+						"reliveDuration": 2,
+						"score":50,
+						"scatterPosition": [
+							27,
+							30
+						]
+					},
+					{
+						"name": "Front",
+						"searchType":1,
+						"position": [
+							14,
+							17
+						],
+						"speed": 0.1,
+						"afraidSpeed": 0.12,
+						"reliveDuration": 2,
+						"score":50,
+						"scatterPosition": [
+							27,
+							2
+						]
+					},
+					{
+						"name": "Smart",
+						"searchType":2,
+						"position": [
+							15,
+							17
+						],
+						"speed": 0.1,
+						"afraidSpeed": 0.12,
+						"reliveDuration": 2,
+						"score":50,
+						"scatterPosition": [
+							2,
+							30
+						]
+					},
+					{
+						"name": "Lazy",
+						"searchType":3,
+						"position": [
+							16,
+							17
+						],
+						"speed": 0.1,
+						"afraidSpeed": 0.12,
+						"reliveDuration": 2,
+						"score":50,
+						"scatterPosition": [
+							2,
+							2
+						]
+					}
+				],
+				"enemyBehaviors": [
+					{
+						"type": 0,
+						"duration": 7
+					},
+					{
+						"type": 1,
+						"duration": 7
+					},
+					{
+						"type": 0,
+						"duration": 5
+					},
+					{
+						"type": 1,
+						"duration": 5
+					},
+					{
+						"type": 0,
+						"duration": 500
+					}
+				],
+				"specialFoods":[
+					"AccelerateFood",
+					"EnemyPauseFood",
+					"ExcitedFood"
+				],
+				"specialFoodPositions":[
+					[7,26],
+					[22,26],
+					[2,8],
+					[15,17]
+				]
+			}
+		]
+	}
+    
 }

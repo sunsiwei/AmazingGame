@@ -18,8 +18,8 @@ namespace PacmanGame
         public int SelectedLevelIndex
         {
             set {
-
-                int levelAmount = GameLevelManager.Instance.LevelsCount;
+                NormalLevelSystem nls = SystemManager.Instance.GetSystem(NormalLevelSystem.name) as NormalLevelSystem;
+                int levelAmount = nls.GetLevelAmount();
                 if(value > levelAmount - 1)
                     selectedLevelIndex = levelAmount - 1;
                 else
@@ -50,7 +50,7 @@ namespace PacmanGame
 
         void OnBtnStartClick()
         {
-            GameLevelManager.Instance.EnterLevel(selectedLevelIndex);
+            GameLevelManager.Instance.EnterLevel(GameConst.GameLevelType_Normal, selectedLevelIndex);
             //PageManager.Instance.ShowPage("UIMenu");
         }
 		void OnBtnLevelMenu()

@@ -5,11 +5,11 @@ using System;
 
 namespace PacmanGame
 {
-    public class FoodModule : ModuleBase
+    public class LevelFoodModule : LevelModuleBase
     {
-        public static string name = "FoodModule";
+        public static string name = "LevelFoodModule";
 
-        public FoodModule(string _name)
+        public LevelFoodModule(string _name)
             : base(_name)
         { 
             
@@ -24,15 +24,16 @@ namespace PacmanGame
             set {
                 alreadyEatFoodCount = value;
                 if (alreadyEatFoodCount >= normalFoodAmount)
-                    GameLevelManager.Instance.LevelPassed();
+                    level.Passed();
+
             }
         }
 
-        public override void OnLevelLoaded(int index)
+        public override void OnLevelLoaded(GameLevel level)
         {
-            base.OnLevelLoaded(index);
-            JsonData levelCfg = ConfigManager.Instance.GetCfg("gameLevelCfg");
-            normalFoodAmount = (int)levelCfg["levels"][index]["FoodAmount"];
+            base.OnLevelLoaded(level);
+            int index = level.Index;
+            normalFoodAmount = (int)level.JsonLevel["foodAmount"];
 
             alreadyEatFoodCount = 0;
 
@@ -42,9 +43,8 @@ namespace PacmanGame
         IEnumerator DelayAppearSpecialFood(int index)
         {
             Debug.Log("ready add food.");
-            JsonData levelCfg = ConfigManager.Instance.GetCfg("gameLevelCfg");
-            JsonData specialFoods = levelCfg["levels"][index]["specialFoods"];
-            JsonData specialFoodPositions = levelCfg["levels"][index]["specialFoodPositions"];
+            JsonData specialFoods = level.JsonSpecialFoods;
+            JsonData specialFoodPositions = level.JsonSpecialFoodPositions;
 
             float time = 0;
             while (true)

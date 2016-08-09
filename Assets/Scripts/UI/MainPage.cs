@@ -14,10 +14,10 @@ namespace PacmanGame
         public MainPage(UIHierarchy _hierarchy, string _path)
             :base(_hierarchy, _path)
         {
-            PlayerScoreModule sm = ModuleManager.Instance.GetModule(PlayerScoreModule.name) as PlayerScoreModule;
+            LevelScoreModule sm = LevelModuleManager.Instance.GetModule(LevelScoreModule.name) as LevelScoreModule;
             sm.EventScoreUpdate += EventScoreUpdate;
 
-            PlayerModule pm = ModuleManager.Instance.GetModule(PlayerModule.name) as PlayerModule;
+            LevelPlayerModule pm = LevelModuleManager.Instance.GetModule(LevelPlayerModule.name) as LevelPlayerModule;
             pm.EnentPlayerLivesUpdate += EventLivesUpdate;
             pm.EventPlayerExpectDirectionUpdate += EventPlayerExpectDirectionUpdate;
 

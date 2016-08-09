@@ -242,7 +242,7 @@ namespace PacmanGame
                 PlayerMove pm = ChaseTarget.GetComponent<PlayerMove>();
                 Vector2 dir = pm.CurDirection;
                 Vector2 tempPos = (Vector2)ChaseTarget.position + dir * 2;
-                EnemyModule em = ModuleManager.Instance.GetModule(EnemyModule.name) as EnemyModule;
+                LevelEnemyModule em = LevelModuleManager.Instance.GetModule(LevelEnemyModule.name) as LevelEnemyModule;
                 GameObject blue = em.GetEnemy(SearchType.Direct);
                 Vector2 bPos = blue.transform.position;
                 return (tempPos - bPos) * 2 + bPos;
@@ -268,7 +268,7 @@ namespace PacmanGame
         {
             get 
             {
-                PlayerModule pm = ModuleManager.Instance.GetModule(PlayerModule.name) as PlayerModule;
+                LevelPlayerModule pm = LevelModuleManager.Instance.GetModule(LevelPlayerModule.name) as LevelPlayerModule;
                 GameObject player = pm.GetPlayer();
                 if (player == null)
                     return null;

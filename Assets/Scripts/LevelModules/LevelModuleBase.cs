@@ -3,22 +3,25 @@ using System.Collections;
 
 namespace PacmanGame
 {
-    public class ModuleBase
+    public class LevelModuleBase
     {
         string name;
         public string Name
         {
             get { return name; }
         }
+        public GameLevel level;
 
-        public ModuleBase(string _name)
+        public LevelModuleBase(string _name)
         {
             name = _name;
         }
 
 		// excute it when every game level loaded
-        public virtual void OnLevelLoaded(int index)
-        { }
+        public virtual void OnLevelLoaded(GameLevel _level)
+        {
+            level = _level;
+        }
     }
 }
 

@@ -94,7 +94,6 @@ namespace PacmanGame
         void AnchorPage(GameObject go)
         {
             GameObject _rootCanvas = GameObject.Find("RootCanvas");
-            Debug.Log(_rootCanvas);
             if (_rootCanvas == null)
             {
                 _rootCanvas = ResourcesLoader.LoadOther("RootCanvas");
@@ -116,12 +115,11 @@ namespace PacmanGame
                 Transform PanelRoot = _rootCanvas.transform.Find("PanelRoot");
                 go.transform.SetParent(PanelRoot.transform, false);
             }
-            else if (hierarchy == UIHierarchy.Panel)
+            else if (hierarchy == UIHierarchy.Popup)
             {
                 Transform PopupRoot = _rootCanvas.transform.Find("PopupRoot");
                 go.transform.SetParent(PopupRoot.transform, false);
             }
-
         }
 	}
 }

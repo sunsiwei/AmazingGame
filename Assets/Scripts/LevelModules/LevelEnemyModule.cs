@@ -5,11 +5,11 @@ using LitJson;
 
 namespace PacmanGame
 {
-    public class EnemyModule : ModuleBase
+    public class LevelEnemyModule : LevelModuleBase
     {
-        public static string name = "EnemyModule";
+        public static string name = "LevelEnemyCtl";
 
-        public EnemyModule(string _name)
+        public LevelEnemyModule(string _name)
             : base(_name)
         {
 
@@ -18,14 +18,14 @@ namespace PacmanGame
         List<GameObject> enemys;
         JsonData enemysCfg;
 
-        public override void OnLevelLoaded(int levelIndex)
+        public override void OnLevelLoaded(GameLevel level)
         {
-            base.OnLevelLoaded(levelIndex);
+            base.OnLevelLoaded(level);
+            int levelIndex = level.Index;
             enemys = new List<GameObject>();
 
-            JsonData levelCfg = ConfigManager.Instance.GetCfg("gameLevelCfg");
-            enemysCfg = levelCfg["levels"][levelIndex]["enemys"];
-            JsonData enemyBehaviors = levelCfg["levels"][levelIndex]["enemyBehaviors"];
+            enemysCfg = level.JsonEnemys;
+            JsonData enemyBehaviors = level.JsonEnemysBehaviors;
 
             for (int index = 0; index < enemysCfg.Count; index++)
             {

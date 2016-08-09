@@ -4,43 +4,65 @@ using LitJson;
 
 namespace PacmanGame
 {
+    public class GameConst
+    {
+        public static string GameLevelType_Normal = "normal";
+    }
+
     public class GameLevel
     {
+        string type;
         int index;
-        public int Index
-        {
-            get { return index; }
-        }
+        JsonData jsonLevel;
+        int levelAmount;
 
-        JsonData levelCfg;
+        public int Index { get { return index; } }
+        public string Type { get { return type; } }
 
-        public string SceneName
-        {
-            get { return (string)levelCfg["sceneName"]; }
-        }
+        public JsonData JsonLevel { get { return jsonLevel; } }
+        public string SceneName { get { return (string)jsonLevel["sceneName"]; } }
+        public JsonData JsonPlayer { get { return jsonLevel["player"]; } }
+        public JsonData JsonEnemys { get { return jsonLevel["enemys"]; } }
+        public JsonData JsonEnemysBehaviors { get { return jsonLevel["enemyBehaviors"]; } }
+        public JsonData JsonSpecialFoods { get { return jsonLevel["specialFoods"]; } }
+        public JsonData JsonSpecialFoodPositions { get { return jsonLevel["specialFoodPositions"]; } }
 
-        public GameLevel(int _index)
+        public GameLevel(string _type, int _index)
         {
+            type = _type;
             index = _index;
-            JsonData levelsCfg = ConfigManager.Instance.GetCfg("gameLevelCfg");
-            levelCfg = levelsCfg["levels"][index];
+
+            levelAmount = ConfigManager.Instance.GetCfg("gameLevelCfg")[_type]["levels"].Count;
+            jsonLevel = ConfigManager.Instance.GetCfg("gameLevelCfg")[_type]["levels"][_index];
         }
 
         public void OnLevelLoaded(int index)
         {
-            GameObject map = ResourcesLoader.LoadMap((string)levelCfg["mapName"]);
+            LevelModuleManager.Instance.OnLevelLoaded(this);
+        }
 
-            ModuleManager.Instance.OnLevelLoaded(index);
-            PageManager.Instance.ShowPage("UIMain");
+        public void Passed()
+        {
+            MakePause(true);
+            IOManager.Instance.recordData.levelIndex = Index;
+            IOManager.Instance.FlushToFile();
+
+            if (Index + 1 >= levelAmount)
+            {
+                Debug.Log("The End!!!");
+                return;
+            }
+
+            PageManager.Instance.ShowPage("UILevelEnd");
         }
 
         public void MakePause(bool b)
         {
-            EnemyModule em = ModuleManager.Instance.GetModule(EnemyModule.name) as EnemyModule;
+            LevelEnemyModule em = LevelModuleManager.Instance.GetModule(LevelEnemyModule.name) as LevelEnemyModule;
             em.MakeAllPause(b);
-            PlayerModule pm = ModuleManager.Instance.GetModule(PlayerModule.name) as PlayerModule;
+            LevelPlayerModule pm = LevelModuleManager.Instance.GetModule(LevelPlayerModule.name) as LevelPlayerModule;
             pm.MakePause(b);
-			FoodModule fm = ModuleManager.Instance.GetModule (FoodModule.name) as FoodModule;
+			LevelFoodModule fm = LevelModuleManager.Instance.GetModule (LevelFoodModule.name) as LevelFoodModule;
 			fm.MakePause (b);
         }
     }

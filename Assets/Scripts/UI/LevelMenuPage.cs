@@ -25,7 +25,8 @@ namespace PacmanGame
 
 		protected override void Refresh ()
 		{
-            int passedMaxLevelIndex = GameLevelManager.Instance.PassedMaxLevelIndex;
+            NormalLevelSystem nls = SystemManager.Instance.GetSystem(NormalLevelSystem.name) as NormalLevelSystem;
+            int passedMaxLevelIndex = nls.PassedMaxLevelIndex;
 			for(int i=0; i<levelItems.Length; i++)
 			{
 				Transform imgLock = levelItems[i].Find("ImgLock");
@@ -52,8 +53,9 @@ namespace PacmanGame
 
         void InitLevelItem()
         {
-            int levelAmount = GameLevelManager.Instance.LevelsCount;
-            int passedMaxLevelIndex = GameLevelManager.Instance.PassedMaxLevelIndex;
+            NormalLevelSystem nls = SystemManager.Instance.GetSystem(NormalLevelSystem.name) as NormalLevelSystem;
+            int levelAmount = nls.GetLevelAmount();
+            int passedMaxLevelIndex = nls.PassedMaxLevelIndex;
             levelItems = new Transform[levelAmount];
             
             Transform levelList = transform.Find("LevelList");

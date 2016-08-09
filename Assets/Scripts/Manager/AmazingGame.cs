@@ -21,16 +21,21 @@ namespace PacmanGame
         {
             GameObject.DontDestroyOnLoad(this);
 
-            ModuleManager.Instance.RegisterModules();
-            PageManager.Instance.RegisterPages();
-
             ConfigManager.LoadCfg();
+            IOManager.Instance.Init();
+
+            LevelModuleManager.Instance.RegisterLevelModules();
+            PageManager.Instance.RegisterPages();
+            SystemManager.Instance.SystemsRegister();
+            SystemManager.Instance.SystemsCreate();
+
 
             //YouMiManager.Instance.Init();
             GameLevelManager.Instance.Init();
 
             StartMenuPage smp = PageManager.Instance.ShowPage("UIStartMenu") as StartMenuPage;
-            smp.SelectedLevelIndex = GameLevelManager.Instance.PassedMaxLevelIndex + 1;
+            NormalLevelSystem nls = SystemManager.Instance.GetSystem(NormalLevelSystem.name) as NormalLevelSystem;
+            smp.SelectedLevelIndex = nls.PassedMaxLevelIndex + 1;
         }
 
         void Update()

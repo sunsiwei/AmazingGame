@@ -15,13 +15,13 @@ namespace PacmanGame
                     ActorScore es = co.GetComponent<ActorScore>();
                     if (es != null)
                     {
-                        PlayerScoreModule psm = ModuleManager.Instance.GetModule(PlayerScoreModule.name) as PlayerScoreModule;
+                        LevelScoreModule psm = LevelModuleManager.Instance.GetModule(LevelScoreModule.name) as LevelScoreModule;
                         psm.Score += es.Score;
                     }
                 }
                 else
                 {
-                    PlayerModule pm = ModuleManager.Instance.GetModule(PlayerModule.name) as PlayerModule;
+                    LevelPlayerModule pm = LevelModuleManager.Instance.GetModule(LevelPlayerModule.name) as LevelPlayerModule;
                     pm.OnPlayerDead();
                     
                     Destroy(gameObject);
@@ -32,7 +32,7 @@ namespace PacmanGame
                 ActorScore aScore = co.GetComponent<ActorScore>();
                 if (aScore != null)
                 {
-                    PlayerScoreModule psm = ModuleManager.Instance.GetModule(PlayerScoreModule.name) as PlayerScoreModule;
+                    LevelScoreModule psm = LevelModuleManager.Instance.GetModule(LevelScoreModule.name) as LevelScoreModule;
                     psm.Score += aScore.Score;
                 }
 
@@ -55,7 +55,7 @@ namespace PacmanGame
                 }
                 else
                 {
-                    FoodModule fm = ModuleManager.Instance.GetModule(FoodModule.name) as FoodModule;
+                    LevelFoodModule fm = LevelModuleManager.Instance.GetModule(LevelFoodModule.name) as LevelFoodModule;
                     fm.AlreadyEatFoodCount++;
                 }
             }
@@ -72,7 +72,7 @@ namespace PacmanGame
         }
         IEnumerator MakeAllEnemyPause(int dura)
         {
-            EnemyModule em = ModuleManager.Instance.GetModule(EnemyModule.name) as EnemyModule;
+            LevelEnemyModule em = LevelModuleManager.Instance.GetModule(LevelEnemyModule.name) as LevelEnemyModule;
             em.MakeAllPause(true);
             yield return new WaitForSeconds(dura);
             em.MakeAllPause(false);

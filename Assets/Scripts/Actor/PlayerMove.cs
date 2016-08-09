@@ -38,7 +38,7 @@ namespace PacmanGame
         {
             set { 
                 expectDirection = value;
-                PlayerModule pm = ModuleManager.Instance.GetModule(PlayerModule.name) as PlayerModule;
+                LevelPlayerModule pm = LevelModuleManager.Instance.GetModule(LevelPlayerModule.name) as LevelPlayerModule;
                 pm.PlayerExpectDirection = value;
             }
         }
