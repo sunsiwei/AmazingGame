@@ -11,6 +11,7 @@ namespace PacmanGame
     public class RecordData
     {
         public int levelIndex;//已经通过的最高关卡索引0开始，-1没通过任何关卡
+        public int diamondAmount;
     }
 
     public class IOManager
@@ -41,6 +42,8 @@ namespace PacmanGame
             {
                 recordData = new RecordData();
                 recordData.levelIndex = -1;
+                recordData.diamondAmount = 3;
+                FlushToFile();
                 return;
             }
             string str = sr.ReadToEnd();

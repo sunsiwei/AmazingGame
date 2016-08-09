@@ -13,6 +13,7 @@ namespace PacmanGame
         {
             RegisterSystem(new PromptSystem(PromptSystem.name));
             RegisterSystem(new NormalLevelSystem(NormalLevelSystem.name));
+            RegisterSystem(new DiamondSystem(DiamondSystem.name));
         }
 
         public void SystemsCreate()

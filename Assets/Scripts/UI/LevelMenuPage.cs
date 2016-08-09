@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using LitJson;
 
+
 namespace PacmanGame
 {
 	public class LevelMenuPage : PageBase
@@ -50,6 +51,12 @@ namespace PacmanGame
                 }
 			}
 		}
+
+        protected override void Active()
+        {
+            base.Active();
+            DoTween();
+        }
 
         void InitLevelItem()
         {

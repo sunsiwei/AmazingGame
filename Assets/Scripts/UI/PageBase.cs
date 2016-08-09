@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 
 namespace PacmanGame
@@ -36,14 +37,16 @@ namespace PacmanGame
         //only once when prefeb loaded.
         protected virtual void Awake(GameObject go)
         { }
-        //each time when show.
+        //each time when update.
         protected virtual void Refresh()
         {
         }
+
         //active ui
         protected virtual void Active()
         {
             gameObject.SetActive(true);
+           
         }
         //deactive ui
         protected virtual void Deactive()
@@ -84,6 +87,10 @@ namespace PacmanGame
         {
             gameObject = null;
             data = null;
+        }
+        public void DoTween()
+        {
+            transform.DOScale(0.2f, 0.15f).From().SetEase(Ease.OutBack);
         }
 
         public bool IsActive
