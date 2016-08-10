@@ -51,11 +51,12 @@ namespace PacmanGame
         void OnBtnStartClick()
         {
             GameLevelManager.Instance.EnterLevel(GameConst.GameLevelType_Normal, selectedLevelIndex);
-            //PageManager.Instance.ShowPage("UIMenu");
         }
 		void OnBtnLevelMenu()
 		{
-			PageManager.Instance.ShowPage ("UILevelMenu");
+            //PageManager.Instance.ShowPage ("UILevelMenu");
+
+            PageManager.Instance.ShowPage("UITestPay");
 		}
     }
 }

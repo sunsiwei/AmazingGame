@@ -14,6 +14,7 @@ namespace PacmanGame
             RegisterSystem(new PromptSystem(PromptSystem.name));
             RegisterSystem(new NormalLevelSystem(NormalLevelSystem.name));
             RegisterSystem(new DiamondSystem(DiamondSystem.name));
+            RegisterSystem(new PaySystem(PaySystem.name));
         }
 
         public void SystemsCreate()
@@ -49,7 +50,7 @@ namespace PacmanGame
 
 
 
-        public static SystemManager _Instance = null;
+        static SystemManager _Instance = null;
         private SystemManager()
         {
 		}

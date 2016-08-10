@@ -20,6 +20,7 @@ namespace PacmanGame
         string fileName = "amazinggame.txt";
         string filePath;
         string pKey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+        bool encrypt = false;// 加密record
 
         public RecordData recordData = null;
 
@@ -47,7 +48,8 @@ namespace PacmanGame
                 return;
             }
             string str = sr.ReadToEnd();
-            str = RijndaelDecrypt(str, pKey);
+            if (encrypt == true)
+                str = RijndaelDecrypt(str, pKey);
             JsonData jd = JsonMapper.ToObject(str);
             recordData = JsonMapper.ToObject<RecordData>(str);
             sr.Close();
@@ -67,7 +69,8 @@ namespace PacmanGame
                 sw = f.CreateText();
             }
             string str = JsonMapper.ToJson(recordData);
-            str = RijndaelEncrypt(str, pKey);
+            if (encrypt == true)
+                str = RijndaelEncrypt(str, pKey);
             sw.WriteLine(str);
             sw.Close();
             sw.Dispose();

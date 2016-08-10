@@ -73,8 +73,12 @@ namespace PacmanGame
             Application.LoadLevel("Loading");
         }
 
-        
 
+        public void PayReply(string str)
+        {
+            PaySystem ps = SystemManager.Instance.GetSystem(PaySystem.name) as PaySystem;
+            ps.PayReply(str);
+        }
         
     }
 }

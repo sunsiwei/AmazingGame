@@ -65,28 +65,42 @@ namespace PacmanGame
 
         public void OnPlayerDead()
         {
-            LevelEnemyModule em = LevelModuleManager.Instance.GetModule(LevelEnemyModule.name) as LevelEnemyModule;
+            level.MakePause(true);
             if (LeftPlayerLives <= 0)
             {
-                AmazingGame.Instance.StopAllCoroutines();
                 Debug.Log("Game over!!!");
-
-                em.MakeAllPause(true);
 
                 PageManager.Instance.ShowPage("UIGameOver");
                 return;
             }
 
-            em.MakeAllHome();
-
             AmazingGame.Instance.StartCoroutine(DelayRelive());
         }
+
+        public void Relive()
+        {
+            DiamondSystem ds = SystemManager.Instance.GetSystem(DiamondSystem.name) as DiamondSystem;
+            if (ds.DiamondAmount > 0)
+            {
+                ds.ReduceDiamond(1);
+                AmazingGame.Instance.StartCoroutine(DelayRelive());
+            }
+            else
+            {
+                PromptSystem ps = SystemManager.Instance.GetSystem(PromptSystem.name) as PromptSystem;
+                ps.Prompt("diamond is not enough.");
+            }
+        }
+
         IEnumerator DelayRelive()
         {
+            level.MakePause(false);
+            LevelEnemyModule em = LevelModuleManager.Instance.GetModule(LevelEnemyModule.name) as LevelEnemyModule;
+            em.MakeAllHome();
+
             yield return new WaitForSeconds((int)levelPlayerCfg["playerReliveDelayTime"]);
 
             AddPlayer();
-            LevelEnemyModule em = LevelModuleManager.Instance.GetModule(LevelEnemyModule.name) as LevelEnemyModule;
             em.MakeAllContivueSearch();
         }
 
