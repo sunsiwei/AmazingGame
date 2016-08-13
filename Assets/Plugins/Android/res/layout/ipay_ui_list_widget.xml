@@ -17,7 +17,7 @@
         android:footerDividersEnabled="true"
         android:headerDividersEnabled="true"
         android:listSelector="@drawable/ipay_list_widget_item_bg"
-
+        android:overScrollMode="never"
         android:scrollbars="none"
         android:scrollingCache="false" />
 

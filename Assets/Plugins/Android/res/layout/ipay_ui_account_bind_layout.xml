@@ -148,7 +148,7 @@
             android:footerDividersEnabled="true"
             android:headerDividersEnabled="true"
             android:listSelector="@drawable/ipay_list_item_selector_white"
-
+            android:overScrollMode="never"
             android:scrollbars="none"
             android:scrollingCache="false" >
         </ListView>
