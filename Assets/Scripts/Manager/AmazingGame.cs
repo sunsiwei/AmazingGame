@@ -17,12 +17,19 @@ namespace PacmanGame
             get { return GameObject.Find("AmazingGame").GetComponent<AmazingGame>(); }
         }
 
+        JsonData LocalizationTexts;
+        public string GetText(int index)
+        {
+            return LocalizationTexts[index.ToString()].ToString();
+        }
+
         void Start()
         {
             GameObject.DontDestroyOnLoad(this);
 
-            ConfigManager.LoadCfg();
             IOManager.Instance.Init();
+
+            LocalizationTexts = ConfigManager.Instance.GetCfg("textCfg");
 
             LevelModuleManager.Instance.RegisterLevelModules();
             PageManager.Instance.RegisterPages();
@@ -53,7 +60,7 @@ namespace PacmanGame
 		}
         void OnLevelWasLoaded(int index)
         {
-            Debug.LogFormat("level {0} was loaded.", Application.loadedLevelName);
+            Debug.LogFormat("level name {0} was loaded.", Application.loadedLevelName);
 
             if (Application.loadedLevelName != "Loading")
             {

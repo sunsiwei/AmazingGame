@@ -54,9 +54,9 @@ namespace PacmanGame
         }
 		void OnBtnLevelMenu()
 		{
-            //PageManager.Instance.ShowPage ("UILevelMenu");
+            PageManager.Instance.ShowPage ("UILevelMenu");
 
-            PageManager.Instance.ShowPage("UITestPay");
+            //PageManager.Instance.ShowPage("UITestPay");
 		}
     }
 }

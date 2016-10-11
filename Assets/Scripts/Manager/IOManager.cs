@@ -22,8 +22,11 @@ namespace PacmanGame
         string pKey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
         bool encrypt = false;// 加密record
 
-        public RecordData recordData = null;
 
+        int originalLevelIndex = -1;//(0)
+        int originalDiamondAmount = 0;
+
+        public RecordData recordData = null;
 
         public void Init()
         {
@@ -41,16 +44,16 @@ namespace PacmanGame
             }
             catch (Exception e)
             {
+                Debug.Log(e.ToString());
                 recordData = new RecordData();
-                recordData.levelIndex = -1;
-                recordData.diamondAmount = 3;
+                recordData.levelIndex = originalLevelIndex;
+                recordData.diamondAmount = originalDiamondAmount;
                 FlushToFile();
                 return;
             }
             string str = sr.ReadToEnd();
             if (encrypt == true)
                 str = RijndaelDecrypt(str, pKey);
-            JsonData jd = JsonMapper.ToObject(str);
             recordData = JsonMapper.ToObject<RecordData>(str);
             sr.Close();
             sr.Dispose();

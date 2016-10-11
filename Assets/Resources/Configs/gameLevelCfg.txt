@@ -10,7 +10,7 @@
 				"foodAmount":1,
 				"player":{
 					"name":"pacman",
-					"playerCounts":1,
+					"playerCounts":2,
 					"playerReliveDelayTime":4,
 					"position": [
 						11,

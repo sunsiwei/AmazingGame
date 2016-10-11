@@ -16,7 +16,7 @@ namespace PacmanGame
         public void Prompt(string txt)
         {
             PromptPage pp = PageManager.Instance.GetPage("UIPrompt") as PromptPage;
-            Debug.Log(txt);
+            Debug.LogFormat("PromptSystem:Prompt: {0}", txt);
             pp.PromptText(txt);
         }
     }

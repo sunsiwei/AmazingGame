@@ -21,6 +21,9 @@ namespace PacmanGame
 
             Button btnClose = transform.Find("BtnClose").GetComponent<Button>();
             btnClose.onClick.AddListener(OnBtnClose);
+
+            Button btnMainMenu = transform.Find("BtnMainMenu").GetComponent<Button>();
+            btnMainMenu.onClick.AddListener(OnBtnMainMenu);
         }
 
         protected override void Active()
@@ -41,6 +44,12 @@ namespace PacmanGame
             Hide();
 
             GameLevelManager.Instance.Level.MakePause(false);
+        }
+
+        void OnBtnMainMenu()
+        {
+            Hide();
+            PageManager.Instance.ShowPage("UIStartMenu");
         }
     }
 }

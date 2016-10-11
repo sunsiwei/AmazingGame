@@ -49,7 +49,6 @@ namespace PacmanGame
 
         public void RestartLevel()
         {
-            int curLevelIndex = level.Index;
             EnterLevel(level.Type, level.Index);
         }
 

@@ -20,6 +20,9 @@ namespace PacmanGame
 
             Button btnRelive = transform.Find("BtnRelive").GetComponent<Button>();
             btnRelive.onClick.AddListener(OnBtnRelive);
+
+            Button btnMainMenu = transform.Find("BtnMainMenu").GetComponent<Button>();
+            btnMainMenu.onClick.AddListener(OnBtnMainMenu);
         }
 
         void OnBtnRestartClick()
@@ -31,6 +34,12 @@ namespace PacmanGame
         {
             LevelPlayerModule lpm = LevelModuleManager.Instance.GetModule(LevelPlayerModule.name) as LevelPlayerModule;
             lpm.Relive();
+        }
+
+        void OnBtnMainMenu()
+        {
+            Hide();
+            PageManager.Instance.ShowPage("UIStartMenu");
         }
     }
 }

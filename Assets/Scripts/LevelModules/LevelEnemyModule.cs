@@ -21,7 +21,6 @@ namespace PacmanGame
         public override void OnLevelLoaded(GameLevel level)
         {
             base.OnLevelLoaded(level);
-            int levelIndex = level.Index;
             enemys = new List<GameObject>();
 
             enemysCfg = level.JsonEnemys;

@@ -39,16 +39,13 @@ namespace PacmanGame
 					imgLock.gameObject.SetActive(true);
 				}
 
-                if (i <= passedMaxLevelIndex+1)
+                Button btn = levelItems[i].Find("Button").GetComponent<Button>();
+                int levelIndex = i;
+                btn.onClick.RemoveAllListeners();
+                btn.onClick.AddListener(delegate()
                 {
-                    Button btn = levelItems[i].Find("Button").GetComponent<Button>();
-                    int levelIndex = i;
-					btn.onClick.RemoveAllListeners();
-                    btn.onClick.AddListener(delegate()
-                    {
-                        OnLevelItemClick(levelIndex);
-                    });
-                }
+                    OnLevelItemClick(levelIndex);
+                });
 			}
 		}
 
@@ -62,7 +59,6 @@ namespace PacmanGame
         {
             NormalLevelSystem nls = SystemManager.Instance.GetSystem(NormalLevelSystem.name) as NormalLevelSystem;
             int levelAmount = nls.GetLevelAmount();
-            int passedMaxLevelIndex = nls.PassedMaxLevelIndex;
             levelItems = new Transform[levelAmount];
             
             Transform levelList = transform.Find("LevelList");
@@ -80,7 +76,16 @@ namespace PacmanGame
         }
         void OnLevelItemClick(int index)
         {
-            Debug.Log(index);
+            NormalLevelSystem nls = SystemManager.Instance.GetSystem(NormalLevelSystem.name) as NormalLevelSystem;
+            int passedMaxLevelIndex = nls.PassedMaxLevelIndex;
+
+            if (index > passedMaxLevelIndex + 1)
+            {
+                PromptSystem ps = SystemManager.Instance.GetSystem(PromptSystem.name) as PromptSystem;
+                ps.Prompt(AmazingGame.Instance.GetText(1001));
+                return;
+            }
+
             StartMenuPage smp = PageManager.Instance.ShowPage("UIStartMenu") as StartMenuPage;
             smp.SelectedLevelIndex = index;
 

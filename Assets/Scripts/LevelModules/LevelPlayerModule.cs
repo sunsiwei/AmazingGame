@@ -14,28 +14,28 @@ namespace PacmanGame
         }
 
         public delegate void PlayerLivesUpdateHandler(int count);
-        public event PlayerLivesUpdateHandler EnentPlayerLivesUpdate;
+        public event PlayerLivesUpdateHandler EventPlayerLivesUpdate;
 
         JsonData levelPlayerCfg;
 		GameObject player;
 
         int leftPlayerLives;
-        public int LeftPlayerLives
+        int LeftPlayerLives
         {
             get { return leftPlayerLives; }
             set {
                 leftPlayerLives = value;
-                EnentPlayerLivesUpdate(leftPlayerLives);
+                EventPlayerLivesUpdate(leftPlayerLives);
             }
         }
 
         public delegate void PlayerExpectDirectionUpdateHandle(Vector2 dir);
         public event PlayerExpectDirectionUpdateHandle EventPlayerExpectDirectionUpdate;
-        Vector2 playerExpectDirection;
+        //Vector2 playerExpectDirection;
         public Vector2 PlayerExpectDirection
         {
             set {
-                playerExpectDirection = value;
+                //playerExpectDirection = value;
                 EventPlayerExpectDirectionUpdate(value);
             }
         }
@@ -43,7 +43,6 @@ namespace PacmanGame
         public override void OnLevelLoaded(GameLevel level)
 		{
             base.OnLevelLoaded(level);
-            int levelIndex = level.Index;
 
             levelPlayerCfg = level.JsonPlayer;
 
@@ -59,7 +58,7 @@ namespace PacmanGame
                 ResourcesLoader.LoadOther("JoystickControl");
             }
 
-            EnentPlayerLivesUpdate(leftPlayerLives);
+            LeftPlayerLives--;
             AddPlayer();
 		}
 
@@ -74,21 +73,30 @@ namespace PacmanGame
                 return;
             }
 
+            LeftPlayerLives--;
             AmazingGame.Instance.StartCoroutine(DelayRelive());
         }
 
         public void Relive()
         {
-            DiamondSystem ds = SystemManager.Instance.GetSystem(DiamondSystem.name) as DiamondSystem;
-            if (ds.DiamondAmount > 0)
+            if (LeftPlayerLives > 0)
             {
-                ds.ReduceDiamond(1);
+                LeftPlayerLives--;
                 AmazingGame.Instance.StartCoroutine(DelayRelive());
             }
             else
             {
-                PromptSystem ps = SystemManager.Instance.GetSystem(PromptSystem.name) as PromptSystem;
-                ps.Prompt("diamond is not enough.");
+                DiamondSystem ds = SystemManager.Instance.GetSystem(DiamondSystem.name) as DiamondSystem;
+                if (ds.DiamondAmount > 0)
+                {
+                    ds.ReduceDiamond(1);
+                    AmazingGame.Instance.StartCoroutine(DelayRelive());
+                }
+                else
+                {
+                    PromptSystem ps = SystemManager.Instance.GetSystem(PromptSystem.name) as PromptSystem;
+                    ps.Prompt(AmazingGame.Instance.GetText(1002));
+                } 
             }
         }
 
@@ -115,8 +123,6 @@ namespace PacmanGame
 
         void AddPlayer()
         {
-            LeftPlayerLives--;
-
             player = ResourcesLoader.LoadActor((string)levelPlayerCfg["name"]);
             player.name = (string)levelPlayerCfg["name"];
             PlayerMove pm = player.GetComponent<PlayerMove>();
@@ -127,6 +133,8 @@ namespace PacmanGame
 
         public void MakePause(bool b)
         {
+            if (player == null)
+                return;
             PlayerMove pm = player.GetComponent<PlayerMove>();
             pm.Pause = b;
         }

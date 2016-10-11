@@ -32,14 +32,20 @@ namespace PacmanGame
         
         public void AddDiamond(int num)
         {
-            diamondAmount += num;
+            IOManager.Instance.recordData.diamondAmount += num;
+            IOManager.Instance.FlushToFile();
+            diamondAmount = IOManager.Instance.recordData.diamondAmount;
+
             if (EventDiamondUpdate != null)
                 EventDiamondUpdate(diamondAmount);
         }
 
         public void ReduceDiamond(int num)
         {
-            diamondAmount -= num;
+            IOManager.Instance.recordData.diamondAmount -= num;
+            IOManager.Instance.FlushToFile();
+            diamondAmount = IOManager.Instance.recordData.diamondAmount;
+
             if (EventDiamondUpdate != null)
                 EventDiamondUpdate(diamondAmount);
         }

@@ -17,11 +17,11 @@ namespace PacmanGame
         {
             base.OnLevelLoaded(level);
 
-            GameObject map = ResourcesLoader.LoadMap((string)level.JsonLevel["mapName"]);
+            ResourcesLoader.LoadMap((string)level.JsonLevel["mapName"]);
             PageManager.Instance.ShowPage("UIMain");
 
             PromptSystem ps = SystemManager.Instance.GetSystem(PromptSystem.name) as PromptSystem;
-            ps.Prompt("战斗开始!");
+            ps.Prompt(AmazingGame.Instance.GetText(1000));
         }
     }
 }

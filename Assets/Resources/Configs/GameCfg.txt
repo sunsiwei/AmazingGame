@@ -1,6 +1,0 @@
-{
-	"baseCfg" : {
-		"pacmanLives" : 1,
-		"pacmanReliveDelayTime":4
-	}
-}

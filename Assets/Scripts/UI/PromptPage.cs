@@ -36,7 +36,7 @@ namespace PacmanGame
             uiTxt.text = txt;
             txtList.Add(uiTxt);
 
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(1.0f);
 
             txtList.Remove(uiTxt);
             GameObject.Destroy(obj);

@@ -18,7 +18,7 @@ namespace PacmanGame
             sm.EventScoreUpdate += EventScoreUpdate;
 
             LevelPlayerModule pm = LevelModuleManager.Instance.GetModule(LevelPlayerModule.name) as LevelPlayerModule;
-            pm.EnentPlayerLivesUpdate += EventLivesUpdate;
+            pm.EventPlayerLivesUpdate += EventLivesUpdate;
             pm.EventPlayerExpectDirectionUpdate += EventPlayerExpectDirectionUpdate;
 
             GameLevelManager.Instance.EventLevelLoaded += EventLevelLoaded;
